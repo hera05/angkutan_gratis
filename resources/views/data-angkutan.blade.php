@@ -23,34 +23,50 @@
                 </div>
             </div> --}}
             <br>
-        <form id="filterForm" action="{{ url('/filter-angkutan') }}" method="POST">
-            @csrf
-            <label for="tanggal">Tanggal</label>
-            <input type="date" id="tanggal" name="tanggal" value="{{ old('tanggal', $tanggal ?? '2024-01-21') }}">
-            
-            <label for="opsi">Opsi</label>
-            <select id="opsi" name="opsi">
-                <option value="keberangkatan" {{ old('opsi', $opsi ?? '') == 'keberangkatan' ? 'selected' : '' }}>Keberangkatan</option>
-                <option value="kedatangan" {{ old('opsi', $opsi ?? '') == 'kedatangan' ? 'selected' : '' }}>Kedatangan</option>
-            </select>
-            
-            <label for="sesi">Sesi</label>
-            <select id="sesi" name="sesi">
-                <option value="sesi1" {{ old('sesi', $sesi ?? '') == 'sesi1' ? 'selected' : '' }}>Sesi 1</option>
-            </select>
-            
-            <label for="nama_rute">Rute</label>
-            <select id="nama_rute" name="nama_rute">
-                <option value="brawijaya-sasakperot" {{ old('nama_rute', $nama_rute ?? '') == 'brawijaya-sasakperot' ? 'selected' : '' }}>Terminal Brawijaya - Terminal Sasak Perot</option>
-            </select>
-        </form>
-       
-
-
             <div class="card-body">
-                <table class="table table-bordered">
+                <div class="table-responsive">
+                <form action="{{ route('superadmin.filter-angkutan') }}" method="GET" class="mb-2">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <select name="bulan" id="filter_bulan" class="form-control">
+                                <option value="">-- Pilih Bulan --</option>
+                                @foreach (range(1, 12) as $month)
+                                <option value="{{ $month }}">{{ date('F', mktime(0, 0, 0, $month, 10)) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <select name="tahun" id="filter_tahun" class="form-control">
+                                <option value="">-- Pilih Tahun --</option>
+                                @foreach (range(2021, 2030) as $year)
+                                <option value="{{ $year }}">{{ $year }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="date" name="tanggal" id="filter_tanggal" class="form-control" value="{{ old('tanggal') }}">
+                        </div>
+                        <div class="col-sm-3">
+                            <select name="sesi" id="filter_sesi"  class="form-control">
+                                <option value="">Sesi</option>
+                                <option value="sesi 1" selected="{{isset($_GET['sesi']) && $_GET['sesi'] == 'sesi 1'}}">Sesi 1</option>
+                                <option value="sesi 2" selected="{{isset($_GET['sesi']) && $_GET['sesi'] == 'sesi 1'}}">Sesi 2</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary me-2">Filter</button>
+                            |
+                            <a href="{{ route('superadmin.filter-angkutan') }}" class="btn btn-secondary">Reset</a>
+                            |
+                            {{-- <a href="#" class="btn btn-primary">Export</a> --}}
+                        </div>
+                    </div>
+                </form>
+                
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <tr>
                         <th>No.</th>
+                        <th>Tanggal</th>
                         <th>Plat Nomor</th>
                         <th>Nama Driver</th>
                         <th>Nama Rute</th>
@@ -86,19 +102,25 @@
                     @foreach ($dtRekapAngkutan as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->created_at }}</td>
                         <td>{{ $item->plat_nomor }}</td>
                         <td>{{ $item->nama_driver }}</td>
                         <td>{{ $item->nama_rute }}</td>
                         <td>{{ $item->opsi }}</td>
                         <td>{{ $item->sesi }}</td>
                         <td>{{ $item->jumlah_penumpang }}</td>
-                        <td><img src="{{ asset('storage/' . $item->gambar) }}" alt="Gambar" width="100"></td>
-                        <td>
-                        </td>
+                        <td><img src="{{ asset('storage/' . $item->gambar) }}" alt="gambar" width="100"></td>
+                       
                     </tr>
                     @endforeach
                     
                 </table>
+                <div class="col-sm-3 d-flex">
+                    <a href="{{ route('superadmin.cetak-angkutan') }}" class="btn btn-primary">Cetak</a>
+                </div>
+                {{-- <div class="col-sm-3 d-flex">
+                    <a href="#" class="btn btn-primary">Cetak</a>
+                </div> --}}
             </div>
             {{-- <div class="card-footer">
                 {{ $dtBerita->links() }}
@@ -111,7 +133,8 @@
 @endsection
 
 
-<script>
+
+{{-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         const filterForm = document.getElementById('filterForm');
         const filterElements = filterForm.querySelectorAll('input, select');
@@ -122,4 +145,4 @@
             });
         });
     });
-</script>
+</script> --}}

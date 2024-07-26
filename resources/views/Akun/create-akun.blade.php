@@ -17,11 +17,11 @@
            <div class="card-info card-outline">
             
             <div class="card-body">
-                <form method="POST"  action="{{ url('store-user') }}" enctype="multipart/form-data">
+                <form method="POST"  action="{{ route('superadmin.user.store') }}" enctype="multipart/form-data">
                 {{ csrf_field() }}
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Nama</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" name="name" aria-describedby="emailHelp">
+                        <label for="exampleInputNama1">Nama</label>
+                        <input type="text" class="form-control" id="exampleInputNama1" name="name" aria-describedby="emailHelp">
                         
                     </div>
                     <div class="form-group mt-2">
@@ -33,6 +33,10 @@
                         <label for="exampleInputPassword1">Password</label>
                         <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
                     </div>
+                    <div class="form-group mt-2">
+                        <label for="exampleInputPasswordConfirmation">Confirm Password</label>
+                        <input type="password" class="form-control" id="exampleInputPasswordConfirmation" name="password_confirmation" placeholder="Confirm Password">
+                    </div>
 
                     <div class="form-group">
                         <label for="exampleInputAlamat1">Alamat</label>
@@ -41,13 +45,22 @@
                     </div>
                     <div class="form-group mt-2">
                         <label for="exampleInputTlpn1">No Telepon</label>
-                        <input type="text" class="form-control" id="exampleInputTlpn1" name="telepon" aria-describedby="teleponHelp">
+                        <input type="text" class="form-control" id="exampleInputTlpn1" name="tlp" aria-describedby="teleponHelp">
                         
                     </div>
                     <div class="form-group mt-2">
                         <label for="exampleInputFoto1">Foto</label>
                         <input type="file" class="form-control" id="exampleInputFoto1" name="foto" aria-describedby="fotoHelp">
-                        
+                    </div>
+                    <!-- Role Selection -->
+                    <div class="form-group mt-2">
+                        <label for="exampleInputRole1">Role</label>
+                        <select class="form-control" id="exampleInputRole1" name="role">
+                            <option value="super_admin">Superadmin</option>
+                            <option value="admin">Admin</option>
+                            <option value="petugas">Petugas</option>
+                            <option value="driver">Driver</option>
+                        </select>
                     </div>
                    
                     <button type="submit" class="btn btn-primary mt-3">Submit</button>

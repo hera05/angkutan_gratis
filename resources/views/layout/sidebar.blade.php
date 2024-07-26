@@ -13,7 +13,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/dashboard">
+        <a class="nav-link" href="{{ route('superadmin.dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -26,11 +26,11 @@
     </li> --}}
 
     <hr class="sidebar-divider my-0">
-    <li class="nav-item active">
-        <a class="nav-link" href="/data-rute">
+    {{-- <li class="nav-item active">
+        <a class="nav-link" href="{{ route('superadmin.data-rute') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Data Rute</span></a>
-    </li>
+    </li> --}}
 
     {{-- <hr class="sidebar-divider my-0"> --}}
     {{-- <li class="nav-item">
@@ -77,13 +77,13 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 
                 <h6 class="collapse-header">Rute:</h6>
-                <a class="collapse-item" href="/data-rute">Data Rute</a>
+                <a class="collapse-item" href="{{ route('superadmin.data-rute') }}">Data Rute</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Mobil:</h6>
-                <a class="collapse-item" href="/data-mobil">Data Mobil</a>
+                <a class="collapse-item" href="{{ route('superadmin.data-mobil') }}">Data Mobil</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Pelajar:</h6>
-                <a class="collapse-item" href="/data-pelajar">Data Pelajar</a>
+                <a class="collapse-item" href="{{ route('superadmin.data-pelajar') }}">Data Pelajar</a>
             </div>
         </div>
     </li>
@@ -106,13 +106,13 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Angkutan :</h6>
-                <a class="collapse-item" href="/data-angkutan">Rekap Angkutan</a>
+                <a class="collapse-item" href="{{ route('superadmin.data-angkutan') }}">Rekap Angkutan</a>
                 {{-- <a class="collapse-item" href="register.html">Register</a>
                 <a class="collapse-item" href="forgot-password.html">Forgot Password</a> --}}
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Absen:</h6>
-                <a class="collapse-item" href="/rekap-driver">Rekap Absensi Driver</a>
-                <a class="collapse-item" href="/rekap-penumpang">Rekap Penumpang</a>
+                <a class="collapse-item" href="{{ route('superadmin.rekap-driver') }}">Rekap Absensi Driver</a>
+                <a class="collapse-item" href="{{ route('superadmin.rekap-penumpang') }}">Rekap Penumpang</a>
             </div>
         </div>
     </li>
@@ -120,7 +120,7 @@
 
     <hr class="sidebar-divider my-0">
     <li class="nav-item active">
-        <a class="nav-link" href="/data-akun">
+        <a class="nav-link" href="{{ route('superadmin.data-akun') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Managemen Akun</span></a>
     </li>

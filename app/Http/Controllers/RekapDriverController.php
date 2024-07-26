@@ -21,6 +21,38 @@ class RekapDriverController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
+    public function filterDriver(Request $request)
+    {
+        $query = Absensi::query();
+
+        // $bulan = $request->input('bulan');
+        // $tahun = $request->input('tahun');
+        // $tanggal = $request->input('tanggal');
+
+        if ($request->has('bulan') && $request->bulan != '') {
+            $query->whereMonth('created_at', $request->bulan);
+        }
+
+        if ($request->has('tahun') && $request->tahun != '') {
+            $query->whereYear('created_at', $request->tahun);
+        }
+
+        if ($request->has('tanggal') && $request->tanggal != '') {
+            $query->whereDate('created_at', $request->tanggal);
+        }
+
+        $dtRekapDriver = $query->get();
+
+        return view('Laporan.rekap-driver', compact('dtRekapDriver'));
+    }
+
+    public function cetakDriver()
+    {
+        $dtCetakDriver= Absensi::all();
+        return view('Cetak.cetak-driver', compact('dtCetakDriver'));
+    }
+
     public function create()
     {
         //

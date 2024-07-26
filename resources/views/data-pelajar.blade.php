@@ -16,7 +16,7 @@
            <div class="card-info card-outline">
             <div class="card-header">
                 <div class="card-tools">
-                    <a href="{{ route('create-data-pelajar') }}" class="btn btn-info">Tambah<i class="fas fa-plus-square"></i></a>
+                    <a href="{{ route('superadmin.create-data-pelajar') }}" class="btn btn-info">Tambah<i class="fas fa-plus-square"></i></a>
                 </div>
             </div>
             <div class="card-body">
@@ -58,9 +58,9 @@
                         <td>{{ $item->nama_pelajar }}</td>
                         <td>{{ $item->alamat_pelajar }}</td>
                         <td>
-                        <a href="{{ url('edit-data-pelajar',$item->id) }}"> <i class="fa fa-edit"></i></a> 
+                        <a href="{{ route('superadmin.edit-data-pelajar',$item->id) }}"> <i class="fa fa-edit"></i></a> 
                         | 
-                        <a href="{{ url('delete-data-pelajar',$item->id) }}"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a>
+                        {{-- <a href="{{ route('superadmin.delete-data-pelajar',$item->id) }}"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a> --}}
                         </td>
                     </tr>
                     @endforeach

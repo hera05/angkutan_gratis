@@ -22,6 +22,36 @@
     <!-- Custom styles for this template-->
     <link href="{{asset('template')}}/sb-admin-2/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Custom styles for this page -->
+    <link href="{{asset('template')}}/sb-admin-2/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <style>
+        .avatar-container {
+            width: 180px;
+            height: 180px;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #ddd; /* Optional border */
+            background-color: #f8f9fa; /* Optional background color */
+        }
+    
+        .img-profile {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures image covers the container without distortion */
+        }
+    
+        @media (max-width: 768px) {
+            .avatar-container {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+    
 </head>
 
 <body id="page-top">
@@ -210,16 +240,16 @@
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                                <figure class="img-profile rounded-circle avatar font-weight-bold" data-initial="{{ Auth::user()->name[0] }}">
+                                    <img src="{{ asset('storage/photos/' . Auth::user()->foto) }}" alt="foto" class="img-profile rounded-circle">
+                                </figure>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="/profile">
+                                <a class="dropdown-item" href="{{ route('superadmin.profile') }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -232,7 +262,7 @@
                                     Activity Log
                                 </a> --}}
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/logout" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="{{ route('logout') }}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -313,41 +343,27 @@
     <script src="{{asset('template')}}/sb-admin-2/js/demo/chart-area-demo.js"></script>
     <script src="{{asset('template')}}/sb-admin-2/js/demo/chart-pie-demo.js"></script>
 
+    <!-- Page level plugins -->
+    <script src="{{asset('template')}}/sb-admin-2/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="{{asset('template')}}/sb-admin-2/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
     <!-- Sweet-Alert  -->
-    <script src="../template/plugins/sweet-alert2/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        function toMonthName(monthNumber) {
-            const date = new Date();
-            date.setMonth(monthNumber - 1);
-
-            return date.toLocaleString('id-ID', {
-                month: 'long',
-            });
-        }
-    </script>
-
-    @if($message = Session::get('success'))
-    <script>
-        swal({
-            title: 'Berhasil',
-            text: '{{ $message }}',
-            type: 'success',
-            confirmButtonClass: 'btn btn-success',
-        })
-    </script>
+    @if ($message = Session::get('success'))
+        <script>
+            Swal.fire('{{ $message }}');
+        </script>
     @endif
 
-    @if($message = Session::get('error'))
-    <script>
-        swal({
-            title: 'Error',
-            type: 'error',
-            html: '{{ $message }}',
-            showCloseButton: true,
-        })
-    </script>
+    @if ($message = Session::get('failed'))
+        <script>
+            Swal.fire('{{ $message }}');
+        </script>
     @endif
+    
+
+
 
     @yield('js')
 

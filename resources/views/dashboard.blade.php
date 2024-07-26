@@ -102,24 +102,9 @@
     <!-- Area Chart -->
     <div class="col-xl-8 col-lg-7">
         <div class="card shadow mb-4">
-            <!-- Card Header - Dropdown -->
-            <div
-                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Grafik Jumlah Penumpang Per Bulan </h6>
-                <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                        aria-labelledby="dropdownMenuLink">
-                        <div class="dropdown-header">Dropdown Header:</div>
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </div>
+            <!-- Card Header -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Grafik Jumlah Penumpang Per Bulan</h6>
             </div>
             <!-- Card Body -->
             <div class="card-body">
@@ -326,3 +311,68 @@
     </div>
 </div>
 @endsection
+
+{{-- <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('myAreaChart').getContext('2d');
+
+        // Ambil data dari PHP dan konversikan ke format JavaScript
+        var dataPenumpang = @json($dtRekapAngkutan);
+
+        // Format data untuk Chart.js
+        var bulan = dataPenumpang.map(function(item) {
+            // Menggunakan nama bulan
+            var bulanNama = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return bulanNama[item.bulan - 1];
+        });
+        var jumlah = dataPenumpang.map(function(item) {
+            return item.jumlah;
+        });
+
+        var myAreaChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: bulan,
+                datasets: [{
+                    label: 'Jumlah Penumpang',
+                    data: jumlah,
+                    backgroundColor: 'rgba(78, 115, 223, 0.2)',
+                    borderColor: 'rgba(78, 115, 223, 1)',
+                    borderWidth: 2,
+                    fill: true,
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 10,
+                        bottom: 0
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script> --}}

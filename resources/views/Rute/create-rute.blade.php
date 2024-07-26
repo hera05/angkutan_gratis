@@ -17,7 +17,7 @@
            <div class="card-info card-outline">
             
             <div class="card-body">
-                <form action="{{ route('simpan-data-rute') }}" method="POST">
+                <form action="{{ route('superadmin.simpan-data-rute') }}" method="POST">
                     {{ csrf_field() }}
                     {{-- <div class="form-group">
                         <label for="tgl_berita">Tanggal</label>

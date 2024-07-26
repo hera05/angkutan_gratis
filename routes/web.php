@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MobilController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PenumpangController;
 use App\Http\Controllers\RekapDriverController;
 use App\Http\Controllers\RekapAngkutanController;
@@ -32,15 +33,26 @@ use App\Http\Controllers\RekapPenumpangController;
 
 // Route::get('/login', [HomeController::class, 'login'])->name('index.login')->middleware('guest');
 Route::get('/', [LoginController::class, 'index'])->name('login');
-Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('login-proses');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
+Route::get('/forgot-password', [LoginController::class, 'forgot_password'])->name('forgot-password');
+Route::post('/forgot-password-act', [LoginController::class, 'forgot_password_act'])->name('forgot-password-act');
+
+Route::get('/validasi-forgot-password/{token}', [LoginController::class, 'validasi_forgot_password'])->name('validasi-forgot-password');
+Route::post('/validasi-forgot-password-act', [LoginController::class, 'validasi_forgot_password_act'])->name('validasi-forgot-password-act');
+
+Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('login-proses');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+Route::group(['prefix' => 'superadmin', 'middleware' => ['auth'], 'as' => 'superadmin.'], function () {
+Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
 Route::get('/data-rute', [RuteController::class, 'index'])->name('data-rute');
 Route::get('/create-data-rute', [RuteController::class, 'create'])->name('create-data-rute');
 Route::post('/simpan-data-rute', [RuteController::class, 'store'])->name('simpan-data-rute');
 Route::get('/edit-data-rute/{id}', [RuteController::class, 'edit'])->name('edit-data-rute');
 Route::post('/update-data-rute/{id}', [RuteController::class, 'update'])->name('update-data-rute');
+Route::delete('/delete/{id}', [RuteController::class, 'delete'])->name('rute.delete');
 
 Route::get('/data-driver', [DriverController::class, 'index'])->name('data-driver');
 Route::get('/create-data-driver', [DriverController::class, 'create'])->name('create-data-driver');
@@ -66,8 +78,31 @@ Route::get('/rekap-driver', [RekapDriverController::class, 'index'])->name('reka
 
 Route::get('/rekap-penumpang', [RekapPenumpangController::class, 'index'])->name('rekap-penumpang');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/data-akun', [App\Http\Controllers\UserController::class, 'index'])->name('data-akun');
-Route::get('/create-user', [App\Http\Controllers\UserController::class, 'create'])->name('user');
-Route::post('/store-user', [App\Http\Controllers\UserController::class, 'store'])->name('user-store');
+Route::get('/data-akun', [UserController::class, 'index'])->name('data-akun');
+Route::get('/create-user', [UserController::class, 'create'])->name('user.create');
+Route::post('/store-user', [UserController::class, 'store'])->name('user.store');
+
+Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+// Route::get('/detail/{id}', [UserController::class, 'detail'])->name('user.detail');
+Route::post('/update/{id}', [UserController::class, 'update'])->name('user.update');
+Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+
+Route::get('/profile', [ProfileController::class,'index'])->name('profile');
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+
+Route::get('/filter-driver', [RekapDriverController::class, 'filterDriver'])->name('filter-driver');
+Route::get('/cetak-driver', [RekapDriverController::class, 'cetakDriver'])->name('cetak-driver');
+
+Route::get('/filter-penumpang', [RekapPenumpangController::class, 'filterPenumpang'])->name('filter-penumpang');
+Route::get('/cetak-penumpang', [RekapPenumpangController::class, 'cetakPenumpang'])->name('cetak-penumpang');
+
+Route::get('/filter-angkutan', [RekapAngkutanController::class, 'filterAngkutan'])->name('filter-angkutan');
+
+Route::get('/cetak-angkutan', [RekapAngkutanController::class, 'cetakAngkutan'])->name('cetak-angkutan');
+
+Route::get('/grafik-angkutan', [RekapAngkutanController::class, 'grafikPenumpang'])->name('grafik.angkutan');
+
+});

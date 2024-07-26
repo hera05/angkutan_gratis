@@ -16,7 +16,7 @@
            <div class="card-info card-outline">
             <div class="card-header">
                 <div class="card-tools">
-                    <a href="{{ route('create-data-rute') }}" class="btn btn-info">Tambah<i class="fas fa-plus-square"></i></a>
+                    <a href="{{ route('superadmin.create-data-rute') }}" class="btn btn-info">Tambah<i class="fas fa-plus-square"></i></a>
                 </div>
             </div>
             <div class="card-body">
@@ -56,9 +56,9 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->nama_rute }}</td>
                         <td>
-                        <a href="{{ url('edit-data-rute',$item->id) }}"> <i class="fa fa-edit"></i></a> 
+                        <a href="{{ route('superadmin.edit-data-rute',$item->id) }}"> <i class="fa fa-edit"></i></a> 
                         | 
-                        <a href="{{ url('delete-data-rute',$item->id) }}"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a>
+                        {{-- <a href="{{ route('superadmin.delete-data-rute',$item->id) }}"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a> --}}
                         </td>
                     </tr>
                     @endforeach

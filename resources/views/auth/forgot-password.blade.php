@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>Web Angkutan | Login </title>
+  <title>Web Angkutan | Forgot Password </title>
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Muli'>
 <link href="{{ asset('template') }}/static/style.css" rel="stylesheet">
@@ -72,9 +72,9 @@
                                     {{-- <button class="btn-sm btn-primary btn-block" type="submit" href="/register">Register</button> --}}
                                     <button class="btn btn-primary btn-block" type="submit">Login</button>
                                 </div>
-                                {{-- <div class="text-center">
+                                <div class="text-center">
                                     <a class="small" href="{{ route('forget-password') }}">Forgot Password?</a>
-                                </div> --}}
+                                </div>
                                 <!-- <div class="form-group pt-1">
                                     <button class="btn btn-primary btn-block" type="submit">Login</button>
                                 </div> -->

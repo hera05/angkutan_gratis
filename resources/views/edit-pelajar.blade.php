@@ -17,7 +17,7 @@
            <div class="card-info card-outline">
             
             <div class="card-body">
-                <form action="{{ route('update-data-pelajar', $pelajar->id) }}" method="POST">
+                <form action="{{ route('superadmin.update-data-pelajar', $pelajar->id) }}" method="POST">
                     {{ csrf_field() }}
                     
                     {{-- <div class="form-group">

@@ -45,4 +45,12 @@ class HomeController extends Controller
     {
         return view('login');
     }
+
+    public function dashboard()
+    {
+        return view('dashboard');
+
+        return abort(403);
+    }
+
 }

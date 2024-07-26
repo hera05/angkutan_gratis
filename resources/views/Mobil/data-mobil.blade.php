@@ -17,11 +17,11 @@
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-center">DATA MOBIL</h6>
              </div>
-            {{-- <div class="card-header">
+            <div class="card-header">
                 <div class="card-tools">
-                    <a href="/create-rute" class="btn btn-info">Tambah<i class="fas fa-plus-square"></i></a>
+                    <a href="{{ route('superadmin.create-data-mobil') }}" class="btn btn-info">Tambah<i class="fas fa-plus-square"></i></a>
                 </div>
-            </div> --}}
+            </div>
             <div class="card-body">
                 <table class="table table-bordered">
                     <tr>
@@ -64,7 +64,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->plat_nomor }}</td>
                         <td>
-                        <a href="{{ url('edit-mobil',$item->id) }}"> <i class="fa fa-edit"></i></a> 
+                        <a href="{{ url('superadmin.edit-mobil',$item->id) }}"> <i class="fa fa-edit"></i></a> 
                         | 
                         <a href="{{ url('delete-mobil',$item->id) }}"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a>
                         </td>

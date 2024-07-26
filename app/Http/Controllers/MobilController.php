@@ -36,7 +36,7 @@ class MobilController extends Controller
         ]);
         // NotaDinas::create($request->all());
 
-        return redirect('data-mobil');
+        return redirect('superadmin.data-mobil');
     }
 
     /**
@@ -63,7 +63,7 @@ class MobilController extends Controller
     {
         $mobil = Plat_nomor::findorfail($id);
         $mobil->update($request->all());
-        return redirect('data-mobil');
+        return redirect('superadmin.data-mobil');
     }
 
     /**

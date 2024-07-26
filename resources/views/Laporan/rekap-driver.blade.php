@@ -1,5 +1,5 @@
 @extends('layout.v_template')
-@section('title', 'Data Angkutan')
+@section('title', 'Rekap Absensi Driver')
     
 @section('content')
 <!-- Page Heading -->
@@ -23,9 +23,42 @@
                 </div>
             </div> --}}
             <div class="card-body">
-                <table class="table table-bordered">
+                <div class="table-responsive">
+                <form action="{{ route('superadmin.filter-driver') }}" method="GET" class="mb-3">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <select name="bulan" id="filter_bulan" class="form-control">
+                                <option value="">-- Pilih Bulan --</option>
+                                @foreach (range(1, 12) as $month)
+                                <option value="{{ $month }}">{{ date('F', mktime(0, 0, 0, $month, 10)) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <select name="tahun" id="filter_tahun" class="form-control">
+                                <option value="">-- Pilih Tahun --</option>
+                                @foreach (range(2021, 2030) as $year)
+                                <option value="{{ $year }}">{{ $year }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <input type="date" name="tanggal" id="filter_tanggal" class="form-control" value="{{ old('tanggal') }}">
+                        </div>
+                        <div class="col-sm-3 d-flex">
+                            <button type="submit" class="btn btn-primary me-2">Filter</button>
+                            |
+                            <a href="{{ route('superadmin.filter-driver') }}" class="btn btn-secondary">Reset</a>
+                            |
+                            {{-- <a href="{{ route('superadmin.filter-driver') }}" class="btn btn-primary">Export</a> --}}
+                        </div>
+                    </div>
+                </form>
+
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <tr>
                         <th>No.</th>
+                        <th>Tanggal</th>
                         <th>Nama Driver</th>
                         <th>Datang</th>
                         <th>Selesai</th>
@@ -60,6 +93,7 @@
                     @foreach ($dtRekapDriver as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->created_at }}</td>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->datang_time }}</td>
                         <td>{{ $item->selesai_time }}</td>
@@ -70,6 +104,9 @@
                     @endforeach
                     
                 </table>
+                <div class="col-sm-3 d-flex">
+                    <a href="{{ route('superadmin.cetak-driver') }}" target="_blank" class="btn btn-primary">Cetak<i class="fas fa-print"></i></a>
+                </div>
             </div>
             {{-- <div class="card-footer">
                 {{ $dtBerita->links() }}

@@ -38,7 +38,7 @@ class RuteController extends Controller
         ]);
         // NotaDinas::create($request->all());
 
-        return redirect('data-rute');
+        return redirect('superadmin.data-rute');
     }
 
     /**
@@ -66,7 +66,18 @@ class RuteController extends Controller
     {
         $rute = Rute::findorfail($id);
         $rute->update($request->all());
-        return redirect('data-rute');
+        return redirect('superadmin.data-rute');
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $rute = Rute::find($id);
+
+        if ($rute) {
+            $rute->forceDelete();
+        }
+
+        return redirect()->route('superadmin.data-pelajar');
     }
 
     /**

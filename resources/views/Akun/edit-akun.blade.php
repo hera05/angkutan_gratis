@@ -4,8 +4,6 @@
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Edit Data Akun</h1>
-    {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-            class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
 </div>
 <div class="container-fluid">
     <!-- Basic Card Example -->
@@ -15,41 +13,74 @@
        </div>
        <div class="content">
            <div class="card-info card-outline">
-            
             <div class="card-body">
-                <form action="#" method="POST">
-                    {{ csrf_field() }}
+                <form method="post"  action="{{ route('superadmin.user.update', ['id' => $data->id]) }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('post')
                     <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" class="form-control" placeholder="Username">
+                        <label for="exampleInputNama1">Nama</label>
+                        <input type="text" class="form-control" id="exampleInputNama1" name="name" value="{{ old('name', $data->name) }}">
+                        @error('name')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="tgl_berita">Tanggal</label>
-                        <input type="date" id="tgl_berita" name="tgl_berita" class="form-control" placeholder="Tanggal Berita">
-                    </div> --}}
-                    {{-- <div class="form-group">
-                        <label for="nama_rute">Nama Rute</label>
-                        <input type="text" id="nama_rute" name="nama_rute" class="form-control" placeholder="Nama Rute>
-                    </div> --}}
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" id="email" name="email" class="form-control" placeholder="Email">
+                    <div class="form-group mt-2">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" name="email" value="{{ old('email', $data->email) }}">
+                        @error('email')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="text" id="password" name="password" class="form-control" placeholder="Password">
+                    <div class="form-group mt-2">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+                        @error('password')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
-                    <div class="form-group">
-                        <label for="role">Role</label>
-                        <input type="text" id="role" name="role" class="form-control" placeholder="Role">
+                    <div class="form-group mt-2">
+                        <label for="exampleInputPasswordConfirmation">Confirm Password</label>
+                        <input type="password" class="form-control" id="exampleInputPasswordConfirmation" name="password_confirmation" placeholder="Confirm Password">
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="uraian_berita">Uraian</label>
-                        <textarea id="uraian_berita" name="uraian_berita" class="form-control" placeholder="Uraian Berita"></textarea>
-                    </div> --}}
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-info">Ubah</button>
+                    <div class="form-group mt-2">
+                        <label for="exampleInputAlamat1">Alamat</label>
+                        <input type="text" class="form-control" id="exampleInputAlamat1" name="alamat" value="{{ old('alamat', $data->alamat) }}">
+                        @error('alamat')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
+                    <div class="form-group mt-2">
+                        <label for="exampleInputTlpn1">No Telepon</label>
+                        <input type="text" class="form-control" id="exampleInputTlpn1" name="tlp" value="{{ old('tlp', $data->tlp) }}">
+                        @error('tlp')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    @if ($data->foto)
+                    <img src="{{ asset('storage/photos/' . $data->foto) }}" width="100" height="100px" alt="User Photo">
+                    @endif
+                    <div class="form-group mt-2">
+                        <label for="exampleInputFoto1">Foto</label>
+                        <input type="file" class="form-control" id="exampleInputFoto1" name="foto">
+                        <small>Upload foto jika ingin menggantinya</small>
+                        @error('foto')
+                        <br>
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="exampleInputRole1">Role</label>
+                        <select class="form-control" id="exampleInputRole1" name="role">
+                            <option value="super_admin" {{ old('role', $data->role) == 'super_admin' ? 'selected' : '' }}>Superadmin</option>
+                            <option value="admin" {{ old('role', $data->role) == 'admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="petugas" {{ old('role', $data->role) == 'petugas' ? 'selected' : '' }}>Petugas</option>
+                            <option value="driver" {{ old('role', $data->role) == 'driver' ? 'selected' : '' }}>Driver</option>
+                        </select>
+                        @error('role')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Submit</button>
                 </form>
             </div>
            </div>
