@@ -32,8 +32,8 @@
                         <input type="text" id="nama_pelajar" name="nama_pelajar" class="form-control" placeholder="Nama Pelajar">
                     </div>
                     <div class="form-group">
-                        <label for="alamat_pelajar">Alamat Pelajar</label>
-                        <input type="text" id="alamat_pelajar" name="alamat_pelajar" class="form-control" placeholder="Alamat Pelajar">
+                        <label for="alamat_pelajar">Titik Jemput</label>
+                        <input type="text" id="alamat_pelajar" name="alamat_pelajar" class="form-control" placeholder="Titik Jemput">
                     </div>
                     
                     {{-- <div class="form-group">

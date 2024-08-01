@@ -1,10 +1,10 @@
 @extends('layout.v_template')
-@section('title', 'Rekap Absensi Driver')
+@section('title', 'Rekap Presensi Driver')
     
 @section('content')
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Rekap Absensi Driver</h1>
+    <h1 class="h3 mb-0 text-gray-800">Rekap Presensi Driver</h1>
     {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
 </div>
@@ -15,105 +15,70 @@
        <div class="content">
            <div class="card-info card-outline">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-center">REKAP ABSENSI DRIVER</h6>
+                <h6 class="m-0 font-weight-bold text-center">REKAP PRESENSI DRIVER</h6>
              </div>
-            {{-- <div class="card-header">
-                <div class="card-tools">
-                    <a href="/create-rute" class="btn btn-info">Tambah<i class="fas fa-plus-square"></i></a>
-                </div>
-            </div> --}}
             <div class="card-body">
                 <div class="table-responsive">
                 <form action="{{ route('superadmin.filter-driver') }}" method="GET" class="mb-3">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <select name="bulan" id="filter_bulan" class="form-control">
-                                <option value="">-- Pilih Bulan --</option>
-                                @foreach (range(1, 12) as $month)
-                                <option value="{{ $month }}">{{ date('F', mktime(0, 0, 0, $month, 10)) }}</option>
-                                @endforeach
-                            </select>
+                    <div class="row pb-3">
+                        <div class="col-md-3">
+                            <label for="exampleInputTanggalDari">Dari Tanggal</label>
+                            <input type="date" name="dari" class="form-control" id="exampleInputTanggalDari" placeholder="Dari Tanggal" autocomplete="off" value="{{ date('d-m-Y') }}">
                         </div>
-                        <div class="col-sm-3">
-                            <select name="tahun" id="filter_tahun" class="form-control">
-                                <option value="">-- Pilih Tahun --</option>
-                                @foreach (range(2021, 2030) as $year)
-                                <option value="{{ $year }}">{{ $year }}</option>
-                                @endforeach
-                            </select>
+                        <div class="col-md-3">
+                            <label for="exampleInputTanggalSampai">Sampai Tanggal</label>
+                            <input type="date" name="sampai" class="form-control " id="exampleInputTanggalSampai" placeholder="Sampai Tanggal" autocomplete="off" value="{{ date('d-m-Y') }}">
                         </div>
-                        <div class="col-sm-3">
-                            <input type="date" name="tanggal" id="filter_tanggal" class="form-control" value="{{ old('tanggal') }}">
-                        </div>
-                        <div class="col-sm-3 d-flex">
+                        <div class="col-md-1 pt-4">
                             <button type="submit" class="btn btn-primary me-2">Filter</button>
-                            |
-                            <a href="{{ route('superadmin.filter-driver') }}" class="btn btn-secondary">Reset</a>
-                            |
-                            {{-- <a href="{{ route('superadmin.filter-driver') }}" class="btn btn-primary">Export</a> --}}
+                        </div>
+                        <div class="col-md-1 pt-4">
+                            <a href="{{ route('superadmin.rekap-driver') }}" class="btn btn-secondary">Reset</a>
                         </div>
                     </div>
                 </form>
 
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <tr>
-                        <th>No.</th>
-                        <th>Tanggal</th>
-                        <th>Nama Driver</th>
-                        <th>Datang</th>
-                        <th>Selesai</th>
-                        <th>Izin</th>
-                        <th>Izin Alasan</th>
-                        <th>Status</th>
-                    </tr>
-
-                    {{-- <tr>
-                        <td>1</td>
-                        <td>Rute A</td>
-                        <td>Terminal Blambangan</td>
-                        <td>Terminal Brawijaya</td>
-                        <td>
-                        <a href="/edit-rute"> <i class="fa fa-edit"></i></a> 
-                        | 
-                        <a href="#"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a>
-                        </td>
-                    </tr> --}}
-
-                    {{-- <tr>
-                        <td>2</td>
-                        <td>Rute B</td>
-                        <td>Terminal Blambangan</td>
-                        <td>Terminal Sasak Perot</td>
-                        <td>
-                        <a href="#"> <i class="fa fa-edit"></i></a> 
-                        | 
-                        <a href="#"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a>
-                        </td>
-                    </tr> --}}
-                    @foreach ($dtRekapDriver as $item)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->created_at }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td>{{ $item->datang_time }}</td>
-                        <td>{{ $item->selesai_time }}</td>
-                        <td>{{ $item->izin_time }}</td>
-                        <td>{{ $item->izin_alasan }}</td>
-                        <td>{{ $item->status }}</td>
-                    </tr>
-                    @endforeach
-                    
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Tanggal</th>
+                            <th>Nama Driver</th>
+                            <th>Datang</th>
+                            <th>Selesai</th>
+                            <th>Izin</th>
+                            <th>Izin Alasan</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($dtRekapDriver as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->created_at->format('d-m-Y') }}</td> 
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->datang_time }}</td>
+                            <td>{{ $item->selesai_time }}</td>
+                            <td>{{ $item->izin_time}}</td>
+                            <td>{{ $item->izin_alasan }}</td>
+                            <td>{{ $item->status }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
                 </table>
-                <div class="col-sm-3 d-flex">
-                    <a href="{{ route('superadmin.cetak-driver') }}" target="_blank" class="btn btn-primary">Cetak<i class="fas fa-print"></i></a>
-                </div>
+                
+                <!-- Tombol Cetak -->
+                {{-- @if($dtRekapDriver->isNotEmpty())
+                <form method="GET" action="{{ route('superadmin.cetak-driver') }}" target="_blank">
+                    <input type="hidden" name="dari" value="{{ request('dari') }}">
+                    <input type="hidden" name="sampai" value="{{ request('sampai') }}">
+                    <button type="submit" class="btn btn-success">Cetak</button>
+                </form>
+                @endif --}}
             </div>
-            {{-- <div class="card-footer">
-                {{ $dtBerita->links() }}
-                </div>     --}}
            </div>
        </div>
-</div>
+    </div>
 </div>
 
 @endsection

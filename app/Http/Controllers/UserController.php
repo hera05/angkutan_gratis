@@ -12,10 +12,10 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     function index()
     {
@@ -65,7 +65,7 @@ class UserController extends Controller
 
         User::create($data);
 
-        return redirect()->route('superadmin.data-akun')->with('success', 'User created successfully.');
+        return redirect()->route('superadmin.data-akun')->with('success', 'User Berhasil ditambahkan.');
     }
 
     public function edit(Request $request, $id)
@@ -118,7 +118,7 @@ class UserController extends Controller
 
     $user->update($data);
 
-    return redirect()->route('superadmin.data-akun');
+    return redirect()->route('superadmin.data-akun')->with('success', 'User Berhasil diubah.');
 }
 
 
@@ -130,7 +130,7 @@ class UserController extends Controller
             $data->forceDelete();
         }
 
-        return redirect()->route('superadmin.data-akun');
+        return redirect()->route('superadmin.data-akun')->with('success', 'User Berhasil dihapus.');
     }
 
 

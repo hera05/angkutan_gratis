@@ -17,5 +17,11 @@ class FormAngkutan extends Model
         'sesi',
         'jumlah_penumpang',
         'gambar',
+        'user_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rute;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RuteController extends Controller
 {
@@ -33,12 +34,18 @@ class RuteController extends Controller
      */
     public function store(Request $request)
     {
-        Rute::create([
-            'nama_rute' => $request->nama_rute,
+        $validator = Validator::make($request->all(), [
+            'nama_rute' => 'required|string|max:255',
         ]);
-        // NotaDinas::create($request->all());
 
-        return redirect('superadmin.data-rute');
+        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+
+        $data['nama_rute']       = $request->nama_rute;
+        
+
+        Rute::create($data);
+
+        return redirect()->route('superadmin.data-rute')->with('success', 'Data Rute Berhasil ditambahkan');
     }
 
     /**
@@ -64,9 +71,20 @@ class RuteController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $rute = Rute::findorfail($id);
-        $rute->update($request->all());
-        return redirect('superadmin.data-rute');
+        $validator = Validator::make($request->all(), [
+            'nama_rute' => 'required|string|max:255',
+        ]);
+
+        if ($validator->fails()) return redirect()->back()->withInput()->withErrors($validator);
+ 
+        $rute = Rute::find($id);
+
+        $data['nama_rute']       = $request->nama_rute;
+        
+
+        $rute->update($data);
+
+        return redirect()->route('superadmin.data-rute')->with('success', 'Data Rute Berhasil diubah');
     }
 
     public function delete(Request $request, $id)
@@ -77,7 +95,7 @@ class RuteController extends Controller
             $rute->forceDelete();
         }
 
-        return redirect()->route('superadmin.data-pelajar');
+        return redirect()->route('superadmin.data-rute')->with('success', 'Data Rute Berhasil dihapus');
     }
 
     /**

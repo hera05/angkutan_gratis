@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SimpanPenumpang;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class RekapPenumpangController extends Controller
 {
@@ -24,30 +25,79 @@ class RekapPenumpangController extends Controller
 
     public function filterPenumpang(Request $request)
     {
-        $query = SimpanPenumpang::query();
+        // Validasi input tanggal
+        $request->validate([
+            'dari' => 'required|date',
+            'sampai' => 'required|date|after_or_equal:dari',
+        ]);
+    
+        // Ambil input tanggal
+        $dari = $request->input('dari');
+        $sampai = $request->input('sampai');
+    
+        // Log tanggal yang digunakan
+        \Log::info("Dari: $dari, Sampai: $sampai");
+    
+        // Format tanggal untuk debugging
+        $formattedDari = \Carbon\Carbon::parse($dari)->format('Y-m-d H:i:s');
+        $formattedSampai = \Carbon\Carbon::parse($sampai)->endOfDay()->format('Y-m-d H:i:s');
+    
+        \Log::info("Formatted Dari: $formattedDari, Formatted Sampai: $formattedSampai");
+    
+        // Ambil data absensi berdasarkan rentang tanggal
+        $dtRekapPenumpang = SimpanPenumpang::whereBetween('tanggal', [$formattedDari, $formattedSampai])->get();
+    
+        // Log jumlah data
+        \Log::info("Jumlah data: " . $dtRekapPenumpang->count());
+        
+    
+        // Kembalikan view dengan data absensi yang sudah difilter
+        return view('Laporan.rekap-penumpang', ['dtRekapPenumpang' => $dtRekapPenumpang]);
+    }
+// {
+//     $query = SimpanPenumpang::query();
 
-        if ($request->has('bulan') && $request->bulan != '') {
-            $query->whereMonth('created_at', $request->bulan);
-        }
+//     // Filter by start_date if provided
+//     if ($request->has('start_date') && $request->start_date != '') {
+//         $query->whereDate('created_at', '>=', $request->start_date);
+//     }
 
-        if ($request->has('tahun') && $request->tahun != '') {
-            $query->whereYear('created_at', $request->tahun);
-        }
+//     // Filter by end_date if provided
+//     if ($request->has('end_date') && $request->end_date != '') {
+//         $query->whereDate('created_at', '<=', $request->end_date);
+//     }
 
-        if ($request->has('tanggal') && $request->tanggal != '') {
-            $query->whereDate('created_at', $request->tanggal);
-        }
+//     // Retrieve the filtered results
+//     $dtRekapPenumpang = $query->get();
 
-        $dtRekapPenumpang = $query->get();
+//     return view('Laporan.rekap-penumpang', compact('dtRekapPenumpang'));
+// }
 
-        return view('Laporan.rekap-penumpang', compact('dtRekapPenumpang'));
+    
+
+public function cetakPenumpang(Request $request)
+{
+    $query = SimpanPenumpang::query();
+
+    // Filter berdasarkan tanggal mulai jika disediakan
+    if ($request->has('start_date') && $request->start_date != '') {
+        $query->whereDate('created_at', '>=', $request->start_date);
     }
 
-    public function cetakPenumpang()
-    {
-        $dtCetakPenumpang= SimpanPenumpang::all();
-        return view('Cetak.cetak-penumpang', compact('dtCetakPenumpang'));
+    // Filter berdasarkan tanggal akhir jika disediakan
+    if ($request->has('end_date') && $request->end_date != '') {
+        $query->whereDate('created_at', '<=', $request->end_date);
     }
+
+    // Ambil hasil yang telah difilter
+    $dtCetakPenumpang = $query->get();
+    $start_date = $request->input('start_date');
+    $end_date = $request->input('end_date');
+
+    // Kirim data ke view
+    return view('Cetak.cetak-penumpang', compact('dtCetakPenumpang', 'start_date', 'end_date'));
+}
+
 
     public function create()
     {

@@ -22,7 +22,12 @@ return new class extends Migration
             $table->enum('sesi', ['sesi 1', 'sesi 2']);
             $table->integer('jumlah_penumpang');
             $table->string('gambar')->nullable();
+            $table->unsignedBigInteger('user_id'); // Tambahkan kolom user_id
             $table->timestamps();
+
+            // Tambahkan foreign key constraint
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            
         });
     }
 

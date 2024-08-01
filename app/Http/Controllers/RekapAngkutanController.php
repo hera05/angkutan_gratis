@@ -15,7 +15,10 @@ class RekapAngkutanController extends Controller
 
     public function index()
     {
-        $dtRekapAngkutan= FormAngkutan::all();
+        // Ambil semua mobil beserta user (driver) terkait
+        $dtRekapAngkutan = FormAngkutan::with(['user' => function ($query) {
+            $query->where('role', 'petugas');
+        }])->get();
         return view('data-angkutan', compact('dtRekapAngkutan'));
     }
 
@@ -23,30 +26,65 @@ class RekapAngkutanController extends Controller
      * Show the form for creating a new resource.
      */
 
-    public function filterAngkutan(Request $request)
-    {
-        $query = FormAngkutan::query();
-
-        if ($request->has('bulan') && $request->bulan != '') {
-            $query->whereMonth('created_at', $request->bulan);
-        }
-
-        if ($request->has('tahun') && $request->tahun != '') {
-            $query->whereYear('created_at', $request->tahun);
-        }
-
-        if ($request->has('tanggal') && $request->tanggal != '') {
-            $query->whereDate('created_at', $request->tanggal);
-        }
+    public function filterAngkutan(Request $request) {
+        {
+            // Validasi input tanggal
+            $request->validate([
+                'dari' => 'required|date',
+                'sampai' => 'required|date|after_or_equal:dari',
+            ]);
         
-        $query->when($request->sesi, function ($query) use ($request) {
-            return $query->where('sesi', $request->sesi);
-        });
-
-        $dtRekapAngkutan = $query->get();
-
-        return view('data-angkutan', compact('dtRekapAngkutan'));
+            // Ambil input tanggal
+            $dari = $request->input('dari');
+            $sampai = $request->input('sampai');
+        
+            // Log tanggal yang digunakan
+            \Log::info("Dari: $dari, Sampai: $sampai");
+        
+            // Format tanggal untuk debugging
+            $formattedDari = \Carbon\Carbon::parse($dari)->format('Y-m-d H:i:s');
+            $formattedSampai = \Carbon\Carbon::parse($sampai)->endOfDay()->format('Y-m-d H:i:s');
+        
+            \Log::info("Formatted Dari: $formattedDari, Formatted Sampai: $formattedSampai");
+        
+            // Ambil data absensi berdasarkan rentang tanggal
+            $dtRekapAngkutan = FormAngkutan::whereBetween('created_at', [$formattedDari, $formattedSampai])->get();
+        
+            // Log jumlah data
+            \Log::info("Jumlah data: " . $dtRekapAngkutan->count());
+            
+        
+            // Kembalikan view dengan data absensi yang sudah difilter
+            return view('data-angkutan', ['dtRekapAngkutan' => $dtRekapAngkutan]);
+        }
     }
+// {
+//     $startDate = $request->input('start_date');
+//     $endDate = $request->input('end_date');
+
+//     // Convert d-m-y to Y-m-d
+//     if ($startDate) {
+//         $startDate = \DateTime::createFromFormat('d-m-Y', $startDate)->format('Y-m-d');
+//     }
+
+//     if ($endDate) {
+//         $endDate = \DateTime::createFromFormat('d-m-Y', $endDate)->format('Y-m-d');
+//     }
+
+//     $query = FormAngkutan::query();
+
+//     if ($startDate) {
+//         $query->whereDate('created_at', '>=', $startDate);
+//     }
+
+//     if ($endDate) {
+//         $query->whereDate('created_at', '<=', $endDate);
+//     }
+
+//     $dtRekapAngkutan = $query->get();
+
+//     return view('superadmin.data-angkutan', compact('dtRekapAngkutan'));
+// }
 
     public function cetakAngkutan()
     {
@@ -54,19 +92,19 @@ class RekapAngkutanController extends Controller
         return view('Cetak.cetak-angkutan', compact('dtCetakAngkutan'));
     }
 
-    public function tampilkanAngkutan($id)
-    {
-        // Ambil data dari model NotaDinas berdasarkan ID atau kriteria lain
-        $angkutan = FormAngkutan::find($id);
+    // public function tampilkanAngkutan($id)
+    // {
+    //     // Ambil data dari model NotaDinas berdasarkan ID atau kriteria lain
+    //     $angkutan = FormAngkutan::find($id);
 
-        // Jika data tidak ditemukan, Anda dapat menangani kondisi ini sesuai kebutuhan
-        if (!$angkutan) {
-            abort(404); // Contoh: Menampilkan halaman 404 jika data tidak ditemukan
-        }
+    //     // Jika data tidak ditemukan, Anda dapat menangani kondisi ini sesuai kebutuhan
+    //     if (!$angkutan) {
+    //         abort(404); // Contoh: Menampilkan halaman 404 jika data tidak ditemukan
+    //     }
 
-        // Kembalikan tampilan Blade sambil meneruskan variabel $angkutan
-        return view('data-angkutan', compact('notaDinas'));
-    }
+    //     // Kembalikan tampilan Blade sambil meneruskan variabel $angkutan
+    //     return view('data-angkutan', compact('notaDinas'));
+    // }
 
     public function grafikPenumpang()
 {

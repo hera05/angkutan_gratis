@@ -25,43 +25,24 @@
             <br>
             <div class="card-body">
                 <div class="table-responsive">
-                <form action="{{ route('superadmin.filter-angkutan') }}" method="GET" class="mb-2">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <select name="bulan" id="filter_bulan" class="form-control">
-                                <option value="">-- Pilih Bulan --</option>
-                                @foreach (range(1, 12) as $month)
-                                <option value="{{ $month }}">{{ date('F', mktime(0, 0, 0, $month, 10)) }}</option>
-                                @endforeach
-                            </select>
+                    <form action="{{ route('superadmin.filter-angkutan') }}" method="GET" class="mb-3">
+                        <div class="row pb-3">
+                            <div class="col-md-3">
+                                <label for="exampleInputTanggalDari">Dari Tanggal</label>
+                                <input type="date" name="dari" class="form-control" id="exampleInputTanggalDari" placeholder="Dari Tanggal" autocomplete="off" value="{{ date('d-m-Y') }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputTanggalSampai">Sampai Tanggal</label>
+                                <input type="date" name="sampai" class="form-control " id="exampleInputTanggalSampai" placeholder="Sampai Tanggal" autocomplete="off" value="{{ date('d-m-Y') }}">
+                            </div>
+                            <div class="col-md-1 pt-4">
+                                <button type="submit" class="btn btn-primary me-2">Filter</button>
+                            </div>
+                            <div class="col-md-1 pt-4">
+                                <a href="{{ route('superadmin.data-angkutan') }}" class="btn btn-secondary">Reset</a>
+                            </div>
                         </div>
-                        <div class="col-sm-3">
-                            <select name="tahun" id="filter_tahun" class="form-control">
-                                <option value="">-- Pilih Tahun --</option>
-                                @foreach (range(2021, 2030) as $year)
-                                <option value="{{ $year }}">{{ $year }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-sm-3">
-                            <input type="date" name="tanggal" id="filter_tanggal" class="form-control" value="{{ old('tanggal') }}">
-                        </div>
-                        <div class="col-sm-3">
-                            <select name="sesi" id="filter_sesi"  class="form-control">
-                                <option value="">Sesi</option>
-                                <option value="sesi 1" selected="{{isset($_GET['sesi']) && $_GET['sesi'] == 'sesi 1'}}">Sesi 1</option>
-                                <option value="sesi 2" selected="{{isset($_GET['sesi']) && $_GET['sesi'] == 'sesi 1'}}">Sesi 2</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-3">
-                            <button type="submit" class="btn btn-primary me-2">Filter</button>
-                            |
-                            <a href="{{ route('superadmin.filter-angkutan') }}" class="btn btn-secondary">Reset</a>
-                            |
-                            {{-- <a href="#" class="btn btn-primary">Export</a> --}}
-                        </div>
-                    </div>
-                </form>
+                    </form>
                 
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <tr>
@@ -115,9 +96,9 @@
                     @endforeach
                     
                 </table>
-                <div class="col-sm-3 d-flex">
+                {{-- <div class="col-sm-3 d-flex">
                     <a href="{{ route('superadmin.cetak-angkutan') }}" class="btn btn-primary">Cetak</a>
-                </div>
+                </div> --}}
                 {{-- <div class="col-sm-3 d-flex">
                     <a href="#" class="btn btn-primary">Cetak</a>
                 </div> --}}

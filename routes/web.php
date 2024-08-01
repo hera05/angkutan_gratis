@@ -44,6 +44,8 @@ Route::post('/login-proses', [LoginController::class, 'login_proses'])->name('lo
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
+
+
 Route::group(['prefix' => 'superadmin', 'middleware' => ['auth'], 'as' => 'superadmin.'], function () {
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
@@ -52,7 +54,7 @@ Route::get('/create-data-rute', [RuteController::class, 'create'])->name('create
 Route::post('/simpan-data-rute', [RuteController::class, 'store'])->name('simpan-data-rute');
 Route::get('/edit-data-rute/{id}', [RuteController::class, 'edit'])->name('edit-data-rute');
 Route::post('/update-data-rute/{id}', [RuteController::class, 'update'])->name('update-data-rute');
-Route::delete('/delete/{id}', [RuteController::class, 'delete'])->name('rute.delete');
+Route::delete('/delete-data-rute/{id}', [RuteController::class, 'delete'])->name('delete-data-rute');
 
 Route::get('/data-driver', [DriverController::class, 'index'])->name('data-driver');
 Route::get('/create-data-driver', [DriverController::class, 'create'])->name('create-data-driver');
@@ -65,12 +67,16 @@ Route::get('/create-data-mobil', [MobilController::class, 'create'])->name('crea
 Route::post('/simpan-data-mobil', [MobilController::class, 'store'])->name('simpan-data-mobil');
 Route::get('/edit-data-mobil/{id}', [MobilController::class, 'edit'])->name('edit-data-mobil');
 Route::post('/update-data-mobil/{id}', [MobilController::class, 'update'])->name('update-data-mobil');
+Route::post('/delete-data-mobil/{id}', [MobilController::class, 'destroy'])->name('delete-data-mobil');
+
+// Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
 
 Route::get('/data-pelajar', [PenumpangController::class, 'index'])->name('data-pelajar');
 Route::get('/create-data-pelajar', [PenumpangController::class, 'create'])->name('create-data-pelajar');
 Route::post('/simpan-data-pelajar', [PenumpangController::class, 'store'])->name('simpan-data-pelajar');
 Route::get('/edit-data-pelajar/{id}', [PenumpangController::class, 'edit'])->name('edit-data-pelajar');
 Route::post('/update-data-pelajar/{id}', [PenumpangController::class, 'update'])->name('update-data-pelajar');
+Route::delete('/delete-data-pelajar/{id}', [PenumpangController::class, 'delete'])->name('delete-data-pelajar');
 
 Route::get('/data-angkutan', [RekapAngkutanController::class, 'index'])->name('data-angkutan');
 
@@ -91,7 +97,6 @@ Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('user.del
 
 Route::get('/profile', [ProfileController::class,'index'])->name('profile');
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
 
 Route::get('/filter-driver', [RekapDriverController::class, 'filterDriver'])->name('filter-driver');
 Route::get('/cetak-driver', [RekapDriverController::class, 'cetakDriver'])->name('cetak-driver');

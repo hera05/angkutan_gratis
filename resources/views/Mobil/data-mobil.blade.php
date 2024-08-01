@@ -29,7 +29,15 @@
                         <th>Nama Pemilik Mobil</th>
                         <th>Nomor STNK</th> --}}
                         <th>No.</th>
+                        <th>Merek Mobil</th>
                         <th>Plat Nomor</th>
+                        <th>Nomor STNK</th>
+                        <th>Status Pajak</th>
+                        <th>Uji KIR</th>
+                        <th>Jumlah Kursi</th>
+                        <th>Nama Driver</th>
+                        <th>Nama Rute</th>
+                        
                         {{-- <th>Status Pajak</th>
                         <th>No HP</th>
                         <th>Uji KIR</th> --}}
@@ -62,13 +70,46 @@
                     @foreach ($dtMobil as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->merek_mobil }}</td>
                         <td>{{ $item->plat_nomor }}</td>
+                        <td>{{ $item->no_stnk }}</td>
+                        <td>{{ $item->status_pajak }}</td>
+                        <td>{{ $item->uji_kir }}</td>
+                        <td>{{ $item->jumlah_kursi }}</td>
+                        <td>{{ $item->user->name }}</td> <!-- Tampilkan nama driver -->
+                        <td>{{ $item->rute->nama_rute }}</td>
                         <td>
                         <a href="{{ url('superadmin.edit-mobil',$item->id) }}"> <i class="fa fa-edit"></i></a> 
                         | 
-                        <a href="{{ url('delete-mobil',$item->id) }}"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a>
+                        <a href="#" data-toggle="modal" data-target="#modal-hapus{{ $item->id }}"><i class="fas fa-trash" aria-hidden="true" style="color:red"></i></a>
+                        {{-- <a href="{{ url('delete-mobil',$item->id) }}"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a> --}}
                         </td>
                     </tr>
+                    <div class="modal fade" id="modal-hapus{{ $item->id }}">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Konfirmasi Hapus Data</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Apakah kamu yakin ingin menghapus data mobil <b>{{ $item->merek_mobil }}</b>?</p>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <form action="{{ route('superadmin.delete-data-mobil', ['id' => $item->id]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Ya, Hapus</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
                     @endforeach
                     
                 </table>

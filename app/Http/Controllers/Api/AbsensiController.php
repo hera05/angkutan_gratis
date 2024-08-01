@@ -18,6 +18,14 @@ class AbsensiController extends Controller
     {
         $absensis = Absensi::with('driver')->get();
         return response()->json($absensis);
+
+        // // Mengambil absensi beserta user yang memiliki role sebagai driver
+        // $absensis = Absensi::whereHas('users', function ($query) {
+        //     $query->where('role', 'driver');
+        // })->with('users')->get();
+
+        // return response()->json($absensis);
+
     }
 
     public function updateStatus(Request $request, $id)

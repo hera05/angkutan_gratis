@@ -100,7 +100,7 @@
 <div class="row">
 
     <!-- Area Chart -->
-    <div class="col-xl-8 col-lg-7">
+    {{-- <div class="col-xl-8 col-lg-7">
         <div class="card shadow mb-4">
             <!-- Card Header -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -113,10 +113,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Pie Chart -->
-    <div class="col-xl-4 col-lg-5">
+    {{-- <div class="col-xl-4 col-lg-5">
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div
@@ -155,7 +155,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 
 <!-- Content Row -->
@@ -165,7 +165,7 @@
     <div class="col-lg-6 mb-4">
 
         <!-- Project Card Example -->
-        <div class="card shadow mb-4">
+        {{-- <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
             </div>
@@ -201,7 +201,7 @@
                         aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Color System -->
         {{-- <div class="row">

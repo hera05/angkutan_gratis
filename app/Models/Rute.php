@@ -12,4 +12,9 @@ class Rute extends Model
     protected $fillable = [
         'nama_rute',
     ];
+
+    public function platNomors()
+    {
+        return $this->hasMany(Plat_nomor::class);
+    }
 }

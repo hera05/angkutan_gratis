@@ -30,7 +30,7 @@
                     </div> --}}
                     <div class="form-group">
                         <label for="nama_rute">Nama Rute</label>
-                        <input type="text" id="nama_rute" name="nama_rute" class="form-control" placeholder="Nama Rute">
+                        <input type="text" id="nama_rute" name="nama_rute" class="form-control" placeholder="Nama Rute" value="{{ old('nama_rute', $rute->nama_rute) }}" required>
                     </div>
                     
                     {{-- <div class="form-group">

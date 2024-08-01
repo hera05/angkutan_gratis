@@ -107,7 +107,7 @@ class LoginController extends Controller
         ];
 
         if (Auth::attempt($data)) {
-            return redirect()->route('superadmin.dashboard');
+            return redirect()->route('superadmin.dashboard')->with('success', 'Anda Berhasil Login');
         } else {
             return redirect()->route('login')->with('failed', 'Email atau Password Salah');
         }

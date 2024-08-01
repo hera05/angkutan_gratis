@@ -5,7 +5,7 @@
         {{-- <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div> --}}
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">Super Admin</div>
     </a>
 
     <!-- Divider -->
@@ -111,7 +111,7 @@
                 <a class="collapse-item" href="forgot-password.html">Forgot Password</a> --}}
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Absen:</h6>
-                <a class="collapse-item" href="{{ route('superadmin.rekap-driver') }}">Rekap Absensi Driver</a>
+                <a class="collapse-item" href="{{ route('superadmin.rekap-driver') }}">Rekap Presensi Driver</a>
                 <a class="collapse-item" href="{{ route('superadmin.rekap-penumpang') }}">Rekap Penumpang</a>
             </div>
         </div>

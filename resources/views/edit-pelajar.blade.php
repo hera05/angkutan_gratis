@@ -30,11 +30,11 @@
                     </div> --}}
                     <div class="form-group">
                         <label for="nama_pelajar">Nama Pelajar</label>
-                        <input type="text" id="nama_pelajar" name="nama_pelajar" class="form-control" placeholder="Nama Pelajar">
+                        <input type="text" id="nama_pelajar" name="nama_pelajar" class="form-control" placeholder="Nama Pelajar" value="{{ old('nama_pelajar', $pelajar->nama_pelajar) }}" required>
                     </div>
                     <div class="form-group">
-                        <label for="alamat_pelajar">Alamat Pelajar</label>
-                        <input type="text" id="alamat_pelajar" name="alamat_pelajar" class="form-control" placeholder="Alamat Pelajar">
+                        <label for="alamat_pelajar">Titik Jemput</label>
+                        <input type="text" id="alamat_pelajar" name="alamat_pelajar" class="form-control" placeholder="Titik Jemput" value="{{ old('alamat_pelajar', $pelajar->alamat_pelajar) }}" required>
                     </div>
                     
                     {{-- <div class="form-group">

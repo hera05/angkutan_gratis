@@ -36,6 +36,7 @@ Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/logout', [AuthController::class, 'logout']);
 
 Route::get('/plat-nomors', [PlatNomorController::class, 'index']);
+Route::get('/plat-nomors/{plat_nomor}', [PlatNomorController::class, 'index']);
 Route::post('/plat-nomors', [PlatNomorController::class, 'store']);
 Route::get('/rutes', [RuteController::class, 'index']);
 Route::post('/rutes', [RuteController::class, 'store']);
