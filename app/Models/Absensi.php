@@ -10,11 +10,16 @@ class Absensi extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'datang_time', 'selesai_time', 'izin_time', 'izin_alasan', 'status',
+        'mobil_id', 'foto', 'keterangan', 'status',
     ];
 
-    public function driver()
+
+    public function mobil()
     {
-        return $this->belongsTo(User::class, 'name');
+        return $this->belongsTo(Plat_nomor::class, 'mobil_id');
     }
+    // public function driver()
+    // {
+    //     return $this->belongsTo(User::class, 'name');
+    // }
 }

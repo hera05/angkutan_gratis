@@ -13,4 +13,9 @@ class DataPelajar extends Model
         'nama_pelajar',
         'alamat_pelajar'
     ];
+
+    public function simpan_penumpang()
+    {
+        return $this->hasMany(SimpanPenumpang::class);
+    }
 }

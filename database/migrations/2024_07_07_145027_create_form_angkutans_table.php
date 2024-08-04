@@ -15,18 +15,16 @@ return new class extends Migration
     {
         Schema::create('form_angkutans', function (Blueprint $table) {
             $table->id();
-            $table->string('plat_nomor');
-            $table->string('nama_driver');
-            $table->string('nama_rute');
+            $table->unsignedBigInteger('petugas_id'); // Tambahkan kolom user_id
+            $table->unsignedBigInteger('plat_nomor_id'); // Tambahkan kolom mobil_id
             $table->enum('opsi', ['keberangkatan', 'kedatangan']);
             $table->enum('sesi', ['sesi 1', 'sesi 2']);
-            $table->integer('jumlah_penumpang');
             $table->string('gambar')->nullable();
-            $table->unsignedBigInteger('user_id'); // Tambahkan kolom user_id
             $table->timestamps();
 
             // Tambahkan foreign key constraint
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('petugas_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('plat_nomor_id')->references('id')->on('plat_nomors')->onDelete('cascade');
             
         });
     }

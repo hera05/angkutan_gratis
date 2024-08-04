@@ -10,18 +10,20 @@ class FormAngkutan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'plat_nomor',
-        'nama_driver',
-        'nama_rute',
+        'petugas_id',
+        'plat_nomor_id',
         'opsi',
         'sesi',
-        'jumlah_penumpang',
         'gambar',
-        'user_id',
+       
     ];
 
-    public function user()
+    public function petugas()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'petugas_id');
+    }
+    public function plat_nomor()
+    {
+        return $this->belongsTo(Plat_nomor::class, 'plat_nomor_id');
     }
 }

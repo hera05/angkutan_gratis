@@ -17,7 +17,7 @@ class PenumpangController extends Controller
     public function index()
     {
         $dtPelajar= DataPelajar::all();
-        return view('data-pelajar', compact('dtPelajar'));
+        return view('Pelajar.data-pelajar', compact('dtPelajar'));
     }
 
     /**
@@ -25,7 +25,7 @@ class PenumpangController extends Controller
      */
     public function create()
     {
-        return view('create-data-pelajar');
+        return view('Pelajar.create-data-pelajar');
     }
 
     /**
@@ -63,7 +63,7 @@ class PenumpangController extends Controller
     public function edit(string $id)
     {
         $pelajar = DataPelajar::findorfail($id);
-        return view('edit-pelajar', compact('pelajar'));
+        return view('Pelajar.edit-pelajar', compact('pelajar'));
     }
 
     /**

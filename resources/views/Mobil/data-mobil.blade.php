@@ -79,7 +79,7 @@
                         <td>{{ $item->user->name }}</td> <!-- Tampilkan nama driver -->
                         <td>{{ $item->rute->nama_rute }}</td>
                         <td>
-                        <a href="{{ url('superadmin.edit-mobil',$item->id) }}"> <i class="fa fa-edit"></i></a> 
+                        <a href="{{ route('superadmin.edit-data-mobil',$item->id) }}"> <i class="fa fa-edit"></i></a> 
                         | 
                         <a href="#" data-toggle="modal" data-target="#modal-hapus{{ $item->id }}"><i class="fas fa-trash" aria-hidden="true" style="color:red"></i></a>
                         {{-- <a href="{{ url('delete-mobil',$item->id) }}"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a> --}}

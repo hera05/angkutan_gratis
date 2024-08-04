@@ -27,7 +27,7 @@
 </head>
 <body>
     <h2 class="center">Cetak Rekap Driver</h2>
-    <p class="center">Periode: {{ \Carbon\Carbon::parse($start_date)->format('d-m-Y') }} s/d {{ \Carbon\Carbon::parse($end_date)->format('d-m-Y') }}</p>
+    <p class="center">Periode: {{ \Carbon\Carbon::parse($dari)->format('d-m-Y') }} s/d {{ \Carbon\Carbon::parse($sampai)->format('d-m-Y') }}</p>
     <table>
         <thead>
             <tr>
@@ -56,6 +56,7 @@
             @endforeach
         </tbody>
     </table>
+    
     <script>
         window.print();
     </script>

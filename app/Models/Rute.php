@@ -17,4 +17,6 @@ class Rute extends Model
     {
         return $this->hasMany(Plat_nomor::class);
     }
+
+    
 }

@@ -45,15 +45,80 @@ class RekapPenumpangController extends Controller
         \Log::info("Formatted Dari: $formattedDari, Formatted Sampai: $formattedSampai");
     
         // Ambil data absensi berdasarkan rentang tanggal
-        $dtRekapPenumpang = SimpanPenumpang::whereBetween('tanggal', [$formattedDari, $formattedSampai])->get();
+        $dtRekapDriver = Absensi::whereBetween('created_at', [$formattedDari, $formattedSampai])->get();
     
         // Log jumlah data
-        \Log::info("Jumlah data: " . $dtRekapPenumpang->count());
+        \Log::info("Jumlah data: " . $dtRekapDriver->count());
         
     
         // Kembalikan view dengan data absensi yang sudah difilter
         return view('Laporan.rekap-penumpang', ['dtRekapPenumpang' => $dtRekapPenumpang]);
     }
+// {
+//     // Validasi input tanggal
+//     $request->validate([
+//         'dari' => 'required|date',
+//         'sampai' => 'required|date|after_or_equal:dari',
+//     ]);
+
+//     // Ambil input tanggal
+//     $dari = $request->input('dari');
+//     $sampai = $request->input('sampai');
+
+//     // Log tanggal yang digunakan
+//     \Log::info("Dari: $dari, Sampai: $sampai");
+
+//     // Format tanggal untuk debugging
+//     $formattedDari = \Carbon\Carbon::parse($dari)->format('Y-m-d');
+//     $formattedSampai = \Carbon\Carbon::parse($sampai)->endOfDay()->format('Y-m-d');
+
+//     \Log::info("Formatted Dari: $formattedDari, Formatted Sampai: $formattedSampai");
+
+//     // Log range yang digunakan dalam query
+//     \Log::info("Query range: [$formattedDari, $formattedSampai]");
+
+//     // Ambil data absensi berdasarkan rentang tanggal
+//     $dtRekapPenumpang = SimpanPenumpang::whereBetween('tanggal', [$formattedDari, $formattedSampai])->get();
+
+//     // Log jumlah data
+//     \Log::info("Jumlah data: " . $dtRekapPenumpang->count());
+
+//     // Kembalikan view dengan data absensi yang sudah difilter
+//     return view('Laporan.rekap-penumpang', ['dtRekapPenumpang' => $dtRekapPenumpang]);
+// }
+
+
+    // public function filterPenumpang(Request $request)
+    // {
+    //     // Validasi input tanggal
+    //     $request->validate([
+    //         'dari' => 'required|date',
+    //         'sampai' => 'required|date|after_or_equal:dari',
+    //     ]);
+    
+    //     // Ambil input tanggal
+    //     $dari = $request->input('dari');
+    //     $sampai = $request->input('sampai');
+    
+    //     // Log tanggal yang digunakan
+    //     \Log::info("Dari: $dari, Sampai: $sampai");
+    
+    //     // Format tanggal untuk debugging
+    //     $formattedDari = \Carbon\Carbon::parse($dari)->format('Y-m-d H:i:s');
+    //     $formattedSampai = \Carbon\Carbon::parse($sampai)->endOfDay()->format('Y-m-d H:i:s');
+    
+    //     \Log::info("Formatted Dari: $formattedDari, Formatted Sampai: $formattedSampai");
+    
+    //     // Ambil data absensi berdasarkan rentang tanggal
+    //     $dtRekapPenumpang = SimpanPenumpang::whereBetween('tanggal', [$formattedDari, $formattedSampai])->get();
+    
+    //     // Log jumlah data
+    //     \Log::info("Jumlah data: " . $dtRekapPenumpang->count());
+        
+    
+    //     // Kembalikan view dengan data absensi yang sudah difilter
+    //     return view('Laporan.rekap-penumpang', ['dtRekapPenumpang' => $dtRekapPenumpang]);
+    // }
 // {
 //     $query = SimpanPenumpang::query();
 

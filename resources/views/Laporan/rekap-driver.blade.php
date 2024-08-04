@@ -46,8 +46,8 @@
                             <th>Nama Driver</th>
                             <th>Datang</th>
                             <th>Selesai</th>
-                            <th>Izin</th>
-                            <th>Izin Alasan</th>
+                            {{-- <th>Izin</th>
+                            <th>Izin Alasan</th> --}}
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -59,14 +59,20 @@
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->datang_time }}</td>
                             <td>{{ $item->selesai_time }}</td>
-                            <td>{{ $item->izin_time}}</td>
-                            <td>{{ $item->izin_alasan }}</td>
+                            {{-- <td>{{ $item->izin_time}}</td>
+                            <td>{{ $item->izin_alasan }}</td> --}}
                             <td>{{ $item->status }}</td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-                
+                {{-- @if($dtRekapDriver->isNotEmpty())
+                    <form method="GET" action="{{ route('superadmin.cetak-driver') }}" target="_blank">
+                        <input type="hidden" name="dari" value="{{ request('dari') }}">
+                        <input type="hidden" name="sampai" value="{{ request('sampai') }}">
+                        <button type="submit" class="btn btn-success">Cetak</button>
+                    </form>
+                    @endif --}}
                 <!-- Tombol Cetak -->
                 {{-- @if($dtRekapDriver->isNotEmpty())
                 <form method="GET" action="{{ route('superadmin.cetak-driver') }}" target="_blank">

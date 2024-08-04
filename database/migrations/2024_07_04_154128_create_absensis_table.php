@@ -15,14 +15,13 @@ return new class extends Migration
     {
         Schema::create('absensis', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->timestamp('datang_time')->nullable();
-            $table->timestamp('selesai_time')->nullable();
-            $table->timestamp('izin_time')->nullable();
-            $table->string('izin_alasan')->nullable();
+            $table->unsignedBigInteger('mobil_id'); // Tambahkan kolom user_id
+            $table->string('foto')->nullable();
+            $table->string('keterangan')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
-            
             $table->timestamps();
+
+            $table->foreign('mobil_id')->references('id')->on('plat_nomors')->onDelete('cascade');
         });
     }
 

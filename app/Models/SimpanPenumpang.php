@@ -10,9 +10,19 @@ class SimpanPenumpang extends Model
     use HasFactory;
 
     protected $fillable = [
-        'tanggal',
+        'mobil1_id',
+        'penumpang_id',
         'nama_penumpang',
         'alamat_penumpang',
         'jenis_penumpang'
     ];
+
+    public function driver_penumpang()
+    {
+        return $this->belongsTo(Plat_nomor::class, 'mobil1_id');
+    }
+    public function penumpang()
+    {
+        return $this->belongsTo(DataPelajar::class, 'penumpang_id');
+    }
 }

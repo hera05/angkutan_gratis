@@ -29,4 +29,13 @@ class Plat_nomor extends Model
     {
         return $this->belongsTo(Rute::class);
     }
+
+    public function presensis()
+    {
+        return $this->hasMany(Absensi::class);
+    }
+    public function angkutans()
+    {
+        return $this->hasMany(FormAngkutan::class, 'plat_nomor_id');
+    }
 }
