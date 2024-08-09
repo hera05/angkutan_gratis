@@ -46,4 +46,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function formAngkutans()
+    {
+        return $this->hasMany(FormAngkutan::class, 'petugas_id');
+    }
 }

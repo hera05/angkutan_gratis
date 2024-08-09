@@ -12,9 +12,6 @@ class SimpanPenumpang extends Model
     protected $fillable = [
         'mobil1_id',
         'penumpang_id',
-        'nama_penumpang',
-        'alamat_penumpang',
-        'jenis_penumpang'
     ];
 
     public function driver_penumpang()

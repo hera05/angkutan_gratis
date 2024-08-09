@@ -44,8 +44,8 @@
                             <th>No.</th>
                             <th>Tanggal</th>
                             <th>Nama Driver</th>
-                            <th>Datang</th>
-                            <th>Selesai</th>
+                            <th>Foto</th>
+                            <th>Keterangan</th>
                             {{-- <th>Izin</th>
                             <th>Izin Alasan</th> --}}
                             <th>Status</th>
@@ -56,9 +56,9 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->created_at->format('d-m-Y') }}</td> 
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->datang_time }}</td>
-                            <td>{{ $item->selesai_time }}</td>
+                            <td>{{ $item->mobil->user->name }}</td>
+                            <td><img src="{{ asset('storage/photos/' . $item->foto) }}" alt="gambar" width="100"></td>
+                            <td>{{ $item->keterangan }}</td>
                             {{-- <td>{{ $item->izin_time}}</td>
                             <td>{{ $item->izin_alasan }}</td> --}}
                             <td>{{ $item->status }}</td>
@@ -66,6 +66,12 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="card-header">
+                    <div class="card-tools">
+                        {{-- <a href="{{ route('create-pegawai') }}" class="btn btn-info">Simpan Data<i class="fas fa-plus-square"></i></a> --}}
+                        <a href="{{ route('superadmin.cetak-driver') }}" target="_blank" class="btn btn-primary">Cetak Data<i class="fas fa-print"></i></a>
+                    </div>
+                </div>
                 {{-- @if($dtRekapDriver->isNotEmpty())
                     <form method="GET" action="{{ route('superadmin.cetak-driver') }}" target="_blank">
                         <input type="hidden" name="dari" value="{{ request('dari') }}">

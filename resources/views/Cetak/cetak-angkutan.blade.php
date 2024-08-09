@@ -17,54 +17,27 @@
         <p class="center">Rute: TERMINAL BRAWIJAYA - TERMINAL SASAK PEROT</p>
         <table>
             <tr>
-                <th>No.</th>
-                <th>Tanggal</th>
-                <th>Plat Nomor</th>
-                <th>Nama Driver</th>
-                <th>Nama Rute</th>
-                <th>Opsi</th>
-                <th>Sesi</th>
-                <th>Jumlah Penumpang</th>
-                <th>Gambar</th>
+                
+                <th>Keberangkatan</th>
+                <th>Kedatangan</th>
             </tr>
-
-            {{-- <tr>
-                <td>1</td>
-                <td>Rute A</td>
-                <td>Terminal Blambangan</td>
-                <td>Terminal Brawijaya</td>
-                <td>
-                <a href="/edit-rute"> <i class="fa fa-edit"></i></a> 
-                | 
-                <a href="#"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a>
-                </td>
-            </tr> --}}
-
-            {{-- <tr>
-                <td>2</td>
-                <td>Rute B</td>
-                <td>Terminal Blambangan</td>
-                <td>Terminal Sasak Perot</td>
-                <td>
-                <a href="#"> <i class="fa fa-edit"></i></a> 
-                | 
-                <a href="#"><i class="fa fa-trash" aria-hidden="true" style="color:red"></i></a>
-                </td>
-            </tr> --}}
+            
             @foreach ($dtCetakAngkutan as $item)
             <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->created_at }}</td>
-                <td>{{ $item->plat_nomor }}</td>
-                <td>{{ $item->nama_driver }}</td>
-                <td>{{ $item->nama_rute }}</td>
-                <td>{{ $item->opsi }}</td>
-                <td>{{ $item->sesi }}</td>
-                <td>{{ $item->jumlah_penumpang }}</td>
-                <td><img src="{{ asset('storage/' . $item->gambar) }}" alt="gambar" width="100"></td>
-               
+                
+                <td>
+                    @if ($item->opsi == 'keberangkatan')
+                        <img src="{{ asset('storage/photos/' . $item->gambar) }}" alt="keberangkatan" width="100">
+                    @endif
+                </td>
+                <td>
+                    @if ($item->opsi == 'kedatangan')
+                        <img src="{{ asset('storage/photos/' . $item->gambar) }}" alt="kedatangan" width="100">
+                    @endif
+                </td>
             </tr>
             @endforeach
+            
         </table>
     </div>
     <script type="text/javascript">

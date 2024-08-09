@@ -17,9 +17,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('mobil1_id'); // Tambahkan kolom mobil_id
             $table->unsignedBigInteger('penumpang_id'); // Tambahkan kolom mobil_id
-            $table->string('nama_penumpang');
-            $table->string('alamat_penumpang');
-            $table->string('jenis_penumpang');
             $table->timestamps();
 
             $table->foreign('mobil1_id')->references('id')->on('plat_nomors')->onDelete('cascade');

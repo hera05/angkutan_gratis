@@ -11,16 +11,26 @@ class RekapAngkutanController extends Controller
      * Display a listing of the resource.
      */
 
-    
-
     public function index()
     {
-        // Ambil semua mobil beserta user (driver) terkait
-        $dtRekapAngkutan = FormAngkutan::with(['user' => function ($query) {
+        // Ambil semua data angkutan beserta user (driver) terkait dan data mobil
+        $dtRekapAngkutan = FormAngkutan::with(['petugas' => function ($query) {
             $query->where('role', 'petugas');
-        }])->get();
+        }, 'plat_nomor.user', 'plat_nomor.rute'])->get();
+
         return view('data-angkutan', compact('dtRekapAngkutan'));
     }
+
+
+
+    // public function index()
+    // {
+    //     // Ambil semua mobil beserta user (driver) terkait
+    //     $dtRekapAngkutan = FormAngkutan::with(['user' => function ($query) {
+    //         $query->where('role', 'petugas');
+    //     }])->get();
+    //     return view('data-angkutan', compact('dtRekapAngkutan'));
+    // }
 
     /**
      * Show the form for creating a new resource.

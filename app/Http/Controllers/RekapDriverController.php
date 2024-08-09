@@ -8,10 +8,19 @@ use Carbon\Carbon;
 
 class RekapDriverController extends Controller
 {
-    public function index() {
-    $dtRekapDriver= Absensi::all();
-    return view('Laporan.rekap-driver', compact('dtRekapDriver'));
+
+    public function index()
+    {
+        // Ambil semua data absensi beserta mobil terkait dan user (driver)
+        $dtRekapDriver = Absensi::with(['mobil.user'])->get();
+
+        return view('Laporan.rekap-driver', compact('dtRekapDriver'));
     }
+
+    // public function index() {
+    // $dtRekapDriver= Absensi::all();
+    // return view('Laporan.rekap-driver', compact('dtRekapDriver'));
+    // }
 
     public function filterDriver(Request $request)
 {
@@ -102,45 +111,49 @@ class RekapDriverController extends Controller
 
     //     return view('Laporan.rekap-driver', compact('dtRekapDriver'));    
     // }
-
-    public function cetakDriver(Request $request)
+    public function cetakDriver()
     {
-        // Validate date input
-        $request->validate([
-            'dari' => 'required|date_format:d/m/Y',
-            'sampai' => 'required|date_format:d/m/Y|after_or_equal:dari',
-        ]);
-
-        // Get date input
-        $dari = $request->input('dari');
-        $sampai = $request->input('sampai');
-
-        // Format dates for querying
-        $formattedDari = Carbon::createFromFormat('d/m/Y', $dari)->startOfDay()->format('Y-m-d H:i:s');
-        $formattedSampai = Carbon::createFromFormat('d/m/Y', $sampai)->endOfDay()->format('Y-m-d H:i:s');
-
-        // Retrieve data for printing
-        $dtCetakDriver = Absensi::whereBetween('created_at', [$formattedDari, $formattedSampai])->get();
-
-        // Format data
-        $dtCetakDriver = $dtCetakDriver->map(function($item) {
-            $item->created_at = Carbon::parse($item->created_at)->format('d/m/Y');
-            $item->datang_time = Carbon::parse($item->datang_time)->format('d/m/Y H:i:s');
-            $item->selesai_time = Carbon::parse($item->selesai_time)->format('d/m/Y H:i:s');
-            if ($item->izin_time) {
-                $item->izin_time = Carbon::parse($item->izin_time)->format('d/m/Y H:i:s');
-            }
-            return $item;
-        });
-
-        return view('Cetak.cetak-driver', compact('dtCetakDriver', 'dari', 'sampai'));
-        // // Return view for printing
-        // return view('Cetak.cetak-driver', [
-        //     'dtCetakDriver' => $dtCetakDriver,
-        //     'dari' => $dari,
-        //     'sampai' => $sampai
-        // ]);
+        $dtCetakDriver= Absensi::all();
+        return view('Cetak.cetak-driver', compact('dtCetakDriver'));
     }
+    // public function cetakDriver(Request $request)
+    // {
+    //     // Validate date input
+    //     $request->validate([
+    //         'dari' => 'required|date_format:d/m/Y',
+    //         'sampai' => 'required|date_format:d/m/Y|after_or_equal:dari',
+    //     ]);
+
+    //     // Get date input
+    //     $dari = $request->input('dari');
+    //     $sampai = $request->input('sampai');
+
+    //     // Format dates for querying
+    //     $formattedDari = Carbon::createFromFormat('d/m/Y', $dari)->startOfDay()->format('Y-m-d H:i:s');
+    //     $formattedSampai = Carbon::createFromFormat('d/m/Y', $sampai)->endOfDay()->format('Y-m-d H:i:s');
+
+    //     // Retrieve data for printing
+    //     $dtCetakDriver = Absensi::whereBetween('created_at', [$formattedDari, $formattedSampai])->get();
+
+    //     // Format data
+    //     $dtCetakDriver = $dtCetakDriver->map(function($item) {
+    //         $item->created_at = Carbon::parse($item->created_at)->format('d/m/Y');
+    //         $item->datang_time = Carbon::parse($item->datang_time)->format('d/m/Y H:i:s');
+    //         $item->selesai_time = Carbon::parse($item->selesai_time)->format('d/m/Y H:i:s');
+    //         if ($item->izin_time) {
+    //             $item->izin_time = Carbon::parse($item->izin_time)->format('d/m/Y H:i:s');
+    //         }
+    //         return $item;
+    //     });
+
+    //     return view('Cetak.cetak-driver', compact('dtCetakDriver', 'dari', 'sampai'));
+    //     // // Return view for printing
+    //     // return view('Cetak.cetak-driver', [
+    //     //     'dtCetakDriver' => $dtCetakDriver,
+    //     //     'dari' => $dari,
+    //     //     'sampai' => $sampai
+    //     // ]);
+    // }
 
     // public function cetakDriver(Request $request)
     // {

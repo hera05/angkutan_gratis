@@ -38,4 +38,12 @@ class Plat_nomor extends Model
     {
         return $this->hasMany(FormAngkutan::class, 'plat_nomor_id');
     }
+    public function simpan_penumpang()
+    {
+        return $this->hasMany(SimpanPenumpang::class, 'mobil1_id');
+    }
+    public function simpan_penumpang_umum()
+    {
+        return $this->hasMany(SimpanPenumpang::class, 'mobil2_id');
+    }
 }

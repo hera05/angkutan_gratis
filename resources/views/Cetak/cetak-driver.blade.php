@@ -27,31 +27,25 @@
 </head>
 <body>
     <h2 class="center">Cetak Rekap Driver</h2>
-    <p class="center">Periode: {{ \Carbon\Carbon::parse($dari)->format('d-m-Y') }} s/d {{ \Carbon\Carbon::parse($sampai)->format('d-m-Y') }}</p>
+    {{-- <p class="center">Periode: {{ \Carbon\Carbon::parse($dari)->format('d-m-Y') }} s/d {{ \Carbon\Carbon::parse($sampai)->format('d-m-Y') }}</p> --}}
     <table>
         <thead>
             <tr>
                 <th>No.</th>
                 <th>Tanggal</th>
                 <th>Nama Driver</th>
-                <th>Datang</th>
-                <th>Selesai</th>
-                <th>Izin</th>
-                <th>Izin Alasan</th>
-                <th>Status</th>
+                <th>Foto</th>
+                <th>Keterangan</th>
             </tr>
         </thead>
         <tbody>
             @foreach($dtCetakDriver as $item)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y') }}</td>
-                <td>{{ $item->name }}</td>
-                <td>{{ \Carbon\Carbon::parse($item->datang_time)->format('H:i') }}</td>
-                <td>{{ \Carbon\Carbon::parse($item->selesai_time)->format('H:i') }}</td>
-                <td>{{ ($item->izin_time) }}</td>
-                <td>{{ $item->izin_alasan }}</td>
-                <td>{{ $item->status }}</td>
+                <td>{{ $item->created_at->format('d-m-Y') }}</td> 
+                <td>{{ $item->mobil->user->name }}</td>
+                <td><img src="{{ asset('storage/photos/' . $item->foto) }}" alt="gambar" width="100"></td>
+                <td>{{ $item->keterangan }}</td>
             </tr>
             @endforeach
         </tbody>

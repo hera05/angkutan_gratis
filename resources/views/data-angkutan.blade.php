@@ -48,12 +48,12 @@
                     <tr>
                         <th>No.</th>
                         <th>Tanggal</th>
-                        <th>Plat Nomor</th>
+                        <th>Nama Petugas</th>
                         <th>Nama Driver</th>
+                        <th>Plat Nomor</th>
                         <th>Nama Rute</th>
                         <th>Opsi</th>
                         <th>Sesi</th>
-                        <th>Jumlah Penumpang</th>
                         <th>Gambar</th>
                     </tr>
 
@@ -83,19 +83,25 @@
                     @foreach ($dtRekapAngkutan as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->created_at }}</td>
-                        <td>{{ $item->plat_nomor }}</td>
-                        <td>{{ $item->nama_driver }}</td>
-                        <td>{{ $item->nama_rute }}</td>
+                        <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                        <td>{{ $item->petugas->name }}</td>
+                        <td>{{ $item->plat_nomor->user->name }}</td>
+                        <td>{{ $item->plat_nomor->plat_nomor }}</td>
+                        <td>{{ $item->plat_nomor->rute->nama_rute }}</td>
                         <td>{{ $item->opsi }}</td>
                         <td>{{ $item->sesi }}</td>
-                        <td>{{ $item->jumlah_penumpang }}</td>
-                        <td><img src="{{ asset('storage/' . $item->gambar) }}" alt="gambar" width="100"></td>
+                        <td><img src="{{ asset('storage/photos/' . $item->gambar) }}" alt="gambar" width="100"></td>
                        
                     </tr>
                     @endforeach
                     
                 </table>
+                <div class="card-header">
+                    <div class="card-tools">
+                        {{-- <a href="{{ route('create-pegawai') }}" class="btn btn-info">Simpan Data<i class="fas fa-plus-square"></i></a> --}}
+                        <a href="{{ route('superadmin.cetak-angkutan') }}" target="_blank" class="btn btn-primary">Cetak Data<i class="fas fa-print"></i></a>
+                    </div>
+                </div>
                 {{-- <div class="col-sm-3 d-flex">
                     <a href="{{ route('superadmin.cetak-angkutan') }}" class="btn btn-primary">Cetak</a>
                 </div> --}}

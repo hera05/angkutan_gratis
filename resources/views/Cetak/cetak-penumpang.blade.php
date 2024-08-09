@@ -21,7 +21,8 @@
 </head>
 <body>
     <h1>Rekap Presensi Penumpang</h1>
-    <p>Periode: {{ $start_date ? \Carbon\Carbon::parse($start_date)->format('d-m-Y') : 'Tidak ada' }} hingga {{ $end_date ? \Carbon\Carbon::parse($end_date)->format('d-m-Y') : 'Tidak ada' }}</p>
+    {{-- <p>Periode: {{ $start_date ? \Carbon\Carbon::parse($start_date)->format('d-m-Y') : 'Tidak ada' }} hingga {{ $end_date ? \Carbon\Carbon::parse($end_date)->format('d-m-Y') : 'Tidak ada' }}</p> --}}
+    @if ($dtCetakPenumpang->count() > 0)
     <table>
         <tr>
             <th>No.</th>
@@ -33,12 +34,18 @@
         @foreach ($dtCetakPenumpang as $item)
         <tr>
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $item->tanggal }}</td>
+            <td>{{ $item->created_at->format('d-m-Y') }}</td>
             <td>{{ $item->nama_penumpang }}</td>
             <td>{{ $item->alamat_penumpang }}</td>
             <td>{{ $item->jenis_penumpang }}</td>
         </tr>
         @endforeach
     </table>
+    @else
+        <p>Tidak ada data untuk ditampilkan.</p>
+    @endif
+    <script>
+        window.print();
+    </script>
 </body>
 </html>

@@ -16,7 +16,7 @@
            <div class="card-info card-outline">
             <div class="card-header">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-center">DATA ABSEN PENUMPANG</h6>
+                    <h6 class="m-0 font-weight-bold text-center">DATA PRESENSI PENUMPANG</h6>
                  </div>
                 {{-- <div class="card-tools">
                     <a href="/create-rute" class="btn btn-info">Tambah<i class="fas fa-plus-square"></i></a>
