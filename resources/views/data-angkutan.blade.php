@@ -25,24 +25,59 @@
             <br>
             <div class="card-body">
                 <div class="table-responsive">
-                    <form action="{{ route('superadmin.filter-angkutan') }}" method="GET" class="mb-3">
-                        <div class="row pb-3">
-                            <div class="col-md-3">
-                                <label for="exampleInputTanggalDari">Dari Tanggal</label>
-                                <input type="date" name="dari" class="form-control" id="exampleInputTanggalDari" placeholder="Dari Tanggal" autocomplete="off" value="{{ date('d-m-Y') }}">
-                            </div>
-                            <div class="col-md-3">
-                                <label for="exampleInputTanggalSampai">Sampai Tanggal</label>
-                                <input type="date" name="sampai" class="form-control " id="exampleInputTanggalSampai" placeholder="Sampai Tanggal" autocomplete="off" value="{{ date('d-m-Y') }}">
-                            </div>
-                            <div class="col-md-1 pt-4">
-                                <button type="submit" class="btn btn-primary me-2">Filter</button>
-                            </div>
-                            <div class="col-md-1 pt-4">
-                                <a href="{{ route('superadmin.data-angkutan') }}" class="btn btn-secondary">Reset</a>
-                            </div>
-                        </div>
-                    </form>
+                   <form action="{{ route('superadmin.filter-angkutan') }}" method="GET" class="mb-3" onsubmit="return validateForm()">
+    <div class="row pb-3">
+        <div class="col-md-3">
+            <label for="exampleInputTanggalDari">Dari Tanggal</label>
+            <input type="date" name="dari" class="form-control" id="exampleInputTanggalDari" placeholder="Dari Tanggal" autocomplete="off" value="{{ date('d-m-Y') }}">
+        </div>
+        <div class="col-md-3">
+            <label for="exampleInputTanggalSampai">Sampai Tanggal</label>
+            <input type="date" name="sampai" class="form-control" id="exampleInputTanggalSampai" placeholder="Sampai Tanggal" autocomplete="off" value="{{ date('d-m-Y') }}">
+        </div>
+        <div class="col-md-3">
+            <label for="exampleInputSesi">Sesi</label>
+            <select name="sesi" class="form-control" id="exampleInputSesi">
+                <option value="">Pilih Sesi</option>
+                <option value="sesi 1">Sesi 1</option>
+                <option value="sesi 2">Sesi 2</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="exampleInputRute">Rute</label>
+            <select name="rute" class="form-control" id="exampleInputRute">
+                <option value="">Pilih Rute</option>
+                @foreach($dtRekapAngkutan as $item)
+                    <option value="{{ $item->plat_nomor->rute->nama_rute }}">{{ $item->plat_nomor->rute->nama_rute }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-1 pt-4">
+            <button type="submit" class="btn btn-primary me-2">Filter</button>
+        </div>
+        <div class="col-md-1 pt-4">
+            <a href="{{ route('superadmin.data-angkutan') }}" class="btn btn-secondary">Reset</a>
+        </div>
+    </div>
+</form>
+
+<script>
+    function validateForm() {
+        var dari = document.getElementById("exampleInputTanggalDari").value;
+        var sampai = document.getElementById("exampleInputTanggalSampai").value;
+        var sesi = document.getElementById("exampleInputSesi").value;
+        var rute = document.getElementById("exampleInputRute").value;
+
+        if (dari === "" || sampai === "" || sesi === "" || rute === "") {
+            alert("Harap isi semua filter sebelum melanjutkan.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+                    
+                    
                 
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <tr>

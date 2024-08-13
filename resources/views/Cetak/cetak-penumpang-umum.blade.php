@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rekap Penumpang</title>
+    <title>Rekap Penumpang Umum</title>
     <style>
         table {
             width: 100%;
@@ -20,9 +20,9 @@
     </style>
 </head>
 <body>
-    <h1>Rekap Presensi Penumpang</h1>
+    <h1>Rekap Presensi Penumpang Umum</h1>
     {{-- <p>Periode: {{ $start_date ? \Carbon\Carbon::parse($start_date)->format('d-m-Y') : 'Tidak ada' }} hingga {{ $end_date ? \Carbon\Carbon::parse($end_date)->format('d-m-Y') : 'Tidak ada' }}</p> --}}
-    @if ($dtCetakPenumpang->count() > 0)
+    @if ($dtCetakPenumpangUmum->count() > 0)
     <table>
         <tr>
             <th>No.</th>
@@ -32,14 +32,14 @@
             <th>Nama Penumpang</th>
             <th>Titik Jemput</th>
         </tr>
-        @foreach ($dtCetakPenumpang as $item)
+        @foreach ($dtCetakPenumpangUmum as $item)
         <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $item->created_at->format('d-m-Y') }}</td> 
-            <td>{{ $item->driver_penumpang->user->name }}</td>
-            <td>{{ $item->driver_penumpang->plat_nomor }}</td>
-            <td>{{ $item->penumpang->nama_pelajar }}</td>
-            <td>{{ $item->penumpang->alamat_pelajar }}</td>
+            <td>{{ $item->driver_penumpang1->user->name }}</td>
+            <td>{{ $item->driver_penumpang1->plat_nomor }}</td>
+            <td>{{ $item->nama_penumpang }}</td>
+            <td>{{ $item->alamat_penumpang }}</td>
         </tr>
         @endforeach
     </table>

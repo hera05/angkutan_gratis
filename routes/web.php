@@ -83,6 +83,7 @@ Route::get('/data-angkutan', [RekapAngkutanController::class, 'index'])->name('d
 Route::get('/rekap-driver', [RekapDriverController::class, 'index'])->name('rekap-driver');
 
 Route::get('/rekap-penumpang', [RekapPenumpangController::class, 'index'])->name('rekap-penumpang');
+Route::get('/rekap-penumpang-umum', [RekapPenumpangController::class, 'penumpang_umum'])->name('rekap-penumpang-umum');
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -102,7 +103,9 @@ Route::get('/filter-driver', [RekapDriverController::class, 'filterDriver'])->na
 Route::get('/cetak-driver', [RekapDriverController::class, 'cetakDriver'])->name('cetak-driver');
 
 Route::get('/filter-penumpang', [RekapPenumpangController::class, 'filterPenumpang'])->name('filter-penumpang');
+Route::get('/filter-penumpang-umum', [RekapPenumpangController::class, 'filterPenumpangUmum'])->name('filter-penumpang-umum');
 Route::get('/cetak-penumpang', [RekapPenumpangController::class, 'cetakPenumpang'])->name('cetak-penumpang');
+Route::get('/cetak-penumpang-umum', [RekapPenumpangController::class, 'cetakPenumpangUmum'])->name('cetak-penumpang-umum');
 
 Route::get('/filter-angkutan', [RekapAngkutanController::class, 'filterAngkutan'])->name('filter-angkutan');
 

@@ -6,6 +6,7 @@ use App\Models\Presensi;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use DB;
 
 class HomeController extends Controller
 {
@@ -48,7 +49,12 @@ class HomeController extends Controller
 
     public function dashboard()
     {
-        return view('dashboard');
+        
+        $mobil = DB::table('plat_nomors')->count();
+        $rute = DB::table('rutes')->count();
+        $pelajar = DB::table('data_pelajars')->count();
+        $users = DB::table('users')->count();
+        return view('dashboard', compact('mobil', 'rute', 'pelajar','users'));
 
         return abort(403);
     }

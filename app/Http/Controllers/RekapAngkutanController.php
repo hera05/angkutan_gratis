@@ -37,37 +37,57 @@ class RekapAngkutanController extends Controller
      */
 
     public function filterAngkutan(Request $request) {
-        {
-            // Validasi input tanggal
-            $request->validate([
-                'dari' => 'required|date',
-                'sampai' => 'required|date|after_or_equal:dari',
-            ]);
-        
-            // Ambil input tanggal
-            $dari = $request->input('dari');
-            $sampai = $request->input('sampai');
-        
-            // Log tanggal yang digunakan
-            \Log::info("Dari: $dari, Sampai: $sampai");
-        
-            // Format tanggal untuk debugging
-            $formattedDari = \Carbon\Carbon::parse($dari)->format('Y-m-d H:i:s');
-            $formattedSampai = \Carbon\Carbon::parse($sampai)->endOfDay()->format('Y-m-d H:i:s');
-        
-            \Log::info("Formatted Dari: $formattedDari, Formatted Sampai: $formattedSampai");
-        
-            // Ambil data absensi berdasarkan rentang tanggal
-            $dtRekapAngkutan = FormAngkutan::whereBetween('created_at', [$formattedDari, $formattedSampai])->get();
-        
-            // Log jumlah data
-            \Log::info("Jumlah data: " . $dtRekapAngkutan->count());
-            
-        
-            // Kembalikan view dengan data absensi yang sudah difilter
-            return view('data-angkutan', ['dtRekapAngkutan' => $dtRekapAngkutan]);
+        // Validasi input tanggal, sesi, dan rute
+        $request->validate([
+            'dari' => 'required|date',
+            'sampai' => 'required|date|after_or_equal:dari',
+            'sesi' => 'nullable|in:sesi 1,sesi 2', // Validasi sesi, opsional
+            'rute' => 'nullable|string', // Validasi rute, opsional
+        ]);
+    
+        // Ambil input tanggal, sesi, dan rute
+        $dari = $request->input('dari');
+        $sampai = $request->input('sampai');
+        $sesi = $request->input('sesi');
+        $rute = $request->input('rute');
+    
+        // Log input yang digunakan
+        \Log::info("Dari: $dari, Sampai: $sampai, Sesi: $sesi, Rute: $rute");
+    
+        // Format tanggal untuk debugging
+        $formattedDari = \Carbon\Carbon::parse($dari)->format('Y-m-d H:i:s');
+        $formattedSampai = \Carbon\Carbon::parse($sampai)->endOfDay()->format('Y-m-d H:i:s');
+    
+        \Log::info("Formatted Dari: $formattedDari, Formatted Sampai: $formattedSampai");
+    
+        // Query untuk data absensi berdasarkan rentang tanggal
+        $query = FormAngkutan::whereBetween('created_at', [$formattedDari, $formattedSampai]);
+    
+        // Tambahkan filter sesi jika ada
+        if (!empty($sesi)) {
+            $query->where('sesi', $sesi);
         }
+    
+        // Tambahkan filter rute jika ada
+        if (!empty($rute)) {
+            $query->whereHas('plat_nomor', function ($q) use ($rute) {
+                $q->whereHas('rute', function ($query) use ($rute) {
+                    $query->where('nama_rute', $rute);
+                });
+            });
+        }
+    
+        // Ambil data absensi
+        $dtRekapAngkutan = $query->get();
+    
+        // Log jumlah data
+        \Log::info("Jumlah data: " . $dtRekapAngkutan->count());
+    
+        // Kembalikan view dengan data absensi yang sudah difilter
+        return view('data-angkutan', ['dtRekapAngkutan' => $dtRekapAngkutan]);
     }
+    
+    
 // {
 //     $startDate = $request->input('start_date');
 //     $endDate = $request->input('end_date');
@@ -98,9 +118,29 @@ class RekapAngkutanController extends Controller
 
     public function cetakAngkutan()
     {
-        $dtCetakAngkutan= FormAngkutan::all();
-        return view('Cetak.cetak-angkutan', compact('dtCetakAngkutan'));
+        $dtCetakAngkutan = FormAngkutan::all();
+
+        // Buat array untuk menyimpan data yang sudah dipasangkan
+        $pairedData = [];
+
+        // Looping melalui data dan pasangkan keberangkatan dan kedatangan berdasarkan ID atau kriteria lain
+        foreach ($dtCetakAngkutan as $item) {
+            // Pastikan ada entry dalam pairedData untuk setiap plat_nomor_id
+            if (!isset($pairedData[$item->plat_nomor_id])) {
+                $pairedData[$item->plat_nomor_id] = ['keberangkatan' => null, 'kedatangan' => null];
+            }
+
+            // Pasangkan data berdasarkan opsi
+            if ($item->opsi == 'keberangkatan') {
+                $pairedData[$item->plat_nomor_id]['keberangkatan'] = $item;
+            } elseif ($item->opsi == 'kedatangan') {
+                $pairedData[$item->plat_nomor_id]['kedatangan'] = $item;
+            }
+        }
+
+        return view('Cetak.cetak-angkutan', ['pairedData' => $pairedData]);
     }
+
 
     // public function tampilkanAngkutan($id)
     // {

@@ -112,7 +112,8 @@
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Absen:</h6>
                 <a class="collapse-item" href="{{ route('superadmin.rekap-driver') }}">Rekap Presensi Driver</a>
-                <a class="collapse-item" href="{{ route('superadmin.rekap-penumpang') }}">Rekap Penumpang</a>
+                <a class="collapse-item" href="{{ route('superadmin.rekap-penumpang') }}">Rekap Penumpang Pelajar</a>
+                <a class="collapse-item" href="{{ route('superadmin.rekap-penumpang-umum') }}">Rekap Penumpang Umum</a>
             </div>
         </div>
     </li>

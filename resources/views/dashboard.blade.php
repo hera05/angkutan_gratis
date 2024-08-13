@@ -18,11 +18,11 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            DATA ANGKUTAN</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
+                            DATA MOBIL</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $mobil }}</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        <i class="fas fa-bus fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
@@ -37,10 +37,10 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             DATA RUTE</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">9</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $rute }}</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        <i class="fas fa-route fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
@@ -53,23 +53,16 @@
             <div class="card-body">
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">DATA PENUMPANG
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">DATA PELAJAR
                         </div>
                         <div class="row no-gutters align-items-center">
                             <div class="col-auto">
-                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">30</div>
-                            </div>
-                            <div class="col">
-                                <div class="progress progress-sm mr-2">
-                                    <div class="progress-bar bg-info" role="progressbar"
-                                        style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                        aria-valuemax="100"></div>
-                                </div>
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $pelajar }}</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
@@ -84,16 +77,18 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                             DATA USER</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">7</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $users }}</div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        <i class="fas fa-user fa-2x text-gray-300"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <!-- Content Row -->
 
